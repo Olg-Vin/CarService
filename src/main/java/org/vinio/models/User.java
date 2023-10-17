@@ -22,9 +22,14 @@ public class User {
     private String lastName;
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
+
+    //    todo lazy
+
+
     @OneToOne
     @JoinColumn(name = "role", nullable = false)
     private UserRole role;
+
     @Column(name = "image_url", nullable = false)
     private URL imageUrl;
     @Column(name = "created", nullable = false)

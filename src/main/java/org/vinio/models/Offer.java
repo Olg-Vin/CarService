@@ -35,6 +35,10 @@ public class Offer {
     private LocalDateTime created;
     @Column(name = "modified")
     private LocalDateTime modified;
+
+    //    todo lazy
+
+
     @OneToOne
     @JoinColumn(name = "model_id")
     private Model model;

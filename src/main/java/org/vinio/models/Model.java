@@ -1,6 +1,8 @@
 package org.vinio.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.vinio.models.enums.Category;
 
 import java.net.URL;
@@ -8,6 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "models")
 public class Model {
@@ -28,6 +33,9 @@ public class Model {
     private LocalDateTime created;
     @Column(name = "modified", nullable = false)
     private LocalDateTime modified;
+
+//    todo lazy
+
     @OneToOne
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
