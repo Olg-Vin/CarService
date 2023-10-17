@@ -8,6 +8,7 @@ import org.vinio.models.enums.Category;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -36,7 +37,7 @@ public class Model {
 
 //    todo lazy
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 }

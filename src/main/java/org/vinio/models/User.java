@@ -25,8 +25,7 @@ public class User {
 
     //    todo lazy
 
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "role", nullable = false)
     private UserRole role;
 

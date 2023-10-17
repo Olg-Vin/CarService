@@ -2,6 +2,8 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.vinio.dtos.BrandDTO;
 import org.vinio.dtos.ModelDTO;
 import org.vinio.models.Brand;
 import org.vinio.models.Model;
@@ -23,13 +25,17 @@ public class ModelServiceImpl implements ModelService<UUID> {
     }
 
     @Override
-    public void Save(ModelDTO modelDTO) {modelRepository.save(modelMapper.map(modelDTO, Model.class));}
-
+    public void Save(ModelDTO modelDTO) {
+        try {modelRepository.save(modelMapper.map(modelDTO, Model.class));}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения");}
+    }
     @Override
     public ModelDTO get(UUID uuid) {
-        return null;
+        try {return modelMapper.map(modelRepository.findById(uuid), ModelDTO.class);}
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Объекта model с id " + uuid + " не существует");
+        }
     }
-
     @Override
     public void Update(ModelDTO modelDTO) {Save(modelDTO);}
 

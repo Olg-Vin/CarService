@@ -38,11 +38,10 @@ public class Offer {
 
     //    todo lazy
 
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "model_id")
     private Model model;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
 }
