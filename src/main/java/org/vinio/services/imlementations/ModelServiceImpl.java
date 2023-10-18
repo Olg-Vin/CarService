@@ -42,15 +42,4 @@ public class ModelServiceImpl implements ModelService<UUID> {
     @Override
     public void delete(UUID uuid) {modelRepository.deleteById(uuid);}
 
-    /*@Override
-    public void addBrand(UUID brandId, ModelDTO modelDTO) {
-        Brand brand = brandRepository.findById(brandId).orElseThrow();
-        if (brand != null) {
-            Model model = modelMapper.map(modelDTO, Model.class);
-            model.setBrand(brand);
-            modelRepository.save(model);
-        } else {
-            throw new IllegalArgumentException("Brand with id " + brandId + " not found");
-        }
-    }*/
 }

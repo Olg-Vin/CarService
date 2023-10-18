@@ -19,6 +19,7 @@ import java.util.UUID;
 @Table(name = "models")
 public class Model {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private UUID id;
     @Column(name = "name", length = 255, nullable = false)
@@ -45,10 +46,10 @@ public class Model {
 
     @ManyToOne
     @JoinColumn(name = "brand_id", unique = true)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private Brand brand;
 
-    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "model")
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Offer> offers;
 }

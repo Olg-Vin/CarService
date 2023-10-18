@@ -2,7 +2,11 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.vinio.dtos.OfferDTO;
 import org.vinio.dtos.UserDTO;
+import org.vinio.models.Model;
+import org.vinio.models.User;
 import org.vinio.repositories.UserRepository;
 import org.vinio.repositories.UserRoleRepository;
 import org.vinio.services.UserService;
@@ -24,22 +28,27 @@ public class UserServiceImpl implements UserService<UUID> {
 
     @Override
     public void save(UserDTO userDTO) {
-
+        try {userRepository.save(modelMapper.map(userDTO, User.class));}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
 
     @Override
     public UserDTO get(UUID uuid) {
-        return null;
+        try {
+            return modelMapper.map(userRepository.findById(uuid), UserDTO.class);
+        }catch (Exception e) {
+            throw new IllegalArgumentException("Объекта offer с id " + uuid + " не существует");
+        }
     }
 
     @Override
-    public void update(UserDTO user) {
-
+    public void update(UserDTO userDTO) {
+        save(userDTO);
     }
 
     @Override
     public void delete(UUID uuid) {
-
+        userRepository.deleteById(uuid);
     }
 
 

@@ -2,7 +2,9 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.vinio.dtos.OfferDTO;
+import org.vinio.models.Offer;
 import org.vinio.repositories.ModelRepository;
 import org.vinio.repositories.OfferRepository;
 import org.vinio.repositories.UserRepository;
@@ -27,8 +29,8 @@ public class OfferServiceImpl implements OfferService<UUID> {
 
     @Override
     public void save(OfferDTO offerDTO) {
-//        try {offerRepository.save(modelMapper.map(offerDTO, Offer.class));}
-//        catch (DataAccessException e){System.out.println("Ошибка сохранения");}
+        try {offerRepository.save(modelMapper.map(offerDTO, Offer.class));}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
 
     // todo referenceById
