@@ -1,6 +1,7 @@
 package org.vinio.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -13,8 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "models")
 public class Model {

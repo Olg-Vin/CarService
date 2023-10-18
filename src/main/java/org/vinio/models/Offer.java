@@ -1,6 +1,7 @@
 package org.vinio.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.vinio.models.enums.Engine;
 import org.vinio.models.enums.Transmission;
 
@@ -11,6 +12,7 @@ import java.time.Year;
 import java.util.UUID;
 
 @Entity
+@Data
 @Table(name = "offers")
 public class Offer {
     @Id
