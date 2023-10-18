@@ -4,11 +4,9 @@ import org.vinio.dtos.OfferDTO;
 
 public interface OfferService<ID> {
 //    crud
-    void Save(OfferDTO offerDTO);
+    void save(OfferDTO offerDTO);
     OfferDTO get(ID id);
-    void Update(OfferDTO offerDTO);
-    void Delete(ID id);
-//    add connection
-    void addModel(ID id);
-    void addUser(ID id);
+    void update(OfferDTO offerDTO);
+    void delete(ID id);
+
 }

@@ -3,6 +3,7 @@ package org.vinio.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.vinio.models.enums.Category;
 
 import java.net.URL;
@@ -18,26 +19,34 @@ import java.util.UUID;
 @Table(name = "models")
 public class Model {
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", nullable = false)
     private UUID id;
     @Column(name = "name", length = 255, nullable = false)
     private String name;
-    @Column(name = "category", nullable = false)
+
+    @Column(name = "category")
+    @Enumerated(EnumType.ORDINAL)
     private Category category;
+
+//    todo string вместо url??
     @Column(name = "image_url")
-    private URL imageUrl;
-    @Column(name = "start_year", nullable = false)
+    private String imageUrl;
+
+    @Column(name = "start_year")
     private LocalDate startYear;
-    @Column(name = "end_year", nullable = false)
+    @Column(name = "end_year")
     private LocalDate endYear;
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     private LocalDateTime created;
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     private LocalDateTime modified;
 
 //    todo lazy
 
     @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false)
+    @JoinColumn(name = "brand_id", unique = true)
     private Brand brand;
+
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    private List<Offer> offers;
 }

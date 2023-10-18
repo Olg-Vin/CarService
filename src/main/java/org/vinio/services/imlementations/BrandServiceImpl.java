@@ -4,13 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.vinio.dtos.BrandDTO;
-import org.vinio.dtos.OfferDTO;
 import org.vinio.models.Brand;
-import org.vinio.models.Offer;
 import org.vinio.repositories.BrandRepository;
 import org.vinio.services.BrandService;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class BrandServiceImpl implements BrandService<UUID> {
@@ -22,7 +19,7 @@ public class BrandServiceImpl implements BrandService<UUID> {
         this.modelMapper = modelMapper;
     }
     @Override
-    public void Save(BrandDTO brandDTO) {
+    public void save(BrandDTO brandDTO) {
         try {brandRepository.save(modelMapper.map(brandDTO, Brand.class));;}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
@@ -34,7 +31,9 @@ public class BrandServiceImpl implements BrandService<UUID> {
         }
     }
     @Override
-    public void Update(BrandDTO brandDTO) {Save(brandDTO);}
+    public void update(BrandDTO brandDTO) {save(brandDTO);}
     @Override
-    public void Delete(UUID uuid) {brandRepository.deleteById(uuid);}
+    public void delete(UUID uuid) {
+        brandRepository.deleteById(uuid);
+    }
 }

@@ -2,9 +2,7 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.vinio.dtos.OfferDTO;
-import org.vinio.models.Offer;
 import org.vinio.repositories.ModelRepository;
 import org.vinio.repositories.OfferRepository;
 import org.vinio.repositories.UserRepository;
@@ -28,36 +26,30 @@ public class OfferServiceImpl implements OfferService<UUID> {
     }
 
     @Override
-    public void Save(OfferDTO offerDTO) {
+    public void save(OfferDTO offerDTO) {
 //        try {offerRepository.save(modelMapper.map(offerDTO, Offer.class));}
 //        catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
 
-// todo referenceById
+    // todo referenceById
     @Override
     public OfferDTO get(UUID uuid) {
-        try {return modelMapper.map(offerRepository.findById(uuid),OfferDTO.class);}
-        catch (Exception e){
+        try {
+            return modelMapper.map(offerRepository.findById(uuid), OfferDTO.class);
+        }catch (Exception e) {
             throw new IllegalArgumentException("Объекта offer с id " + uuid + " не существует");
         }
     }
+
     @Override
-    public void Update(OfferDTO offerDTO) {
-        Save(offerDTO);
+    public void update(OfferDTO offerDTO) {
+        save(offerDTO);
     }
 
     @Override
-    public void Delete(UUID uuid) {
+    public void delete(UUID uuid) {
         offerRepository.deleteById(uuid);
     }
 
-    @Override
-    public void addModel(UUID uuid) {
 
-    }
-
-    @Override
-    public void addUser(UUID uuid) {
-
-    }
 }

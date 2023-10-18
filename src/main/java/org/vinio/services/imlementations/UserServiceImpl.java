@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService<UUID> {
     }
 
     @Override
-    public void Save(UserDTO userDTO) {
+    public void save(UserDTO userDTO) {
 
     }
 
@@ -32,17 +32,14 @@ public class UserServiceImpl implements UserService<UUID> {
     }
 
     @Override
-    public void Update(UserDTO user) {
+    public void update(UserDTO user) {
 
     }
 
     @Override
-    public void Delete(UUID uuid) {
+    public void delete(UUID uuid) {
 
     }
 
-    @Override
-    public void addUserRole(UUID uuid) {
 
-    }
 }

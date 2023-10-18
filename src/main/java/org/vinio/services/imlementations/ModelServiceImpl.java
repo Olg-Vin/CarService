@@ -3,9 +3,7 @@ package org.vinio.services.imlementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.vinio.dtos.BrandDTO;
 import org.vinio.dtos.ModelDTO;
-import org.vinio.models.Brand;
 import org.vinio.models.Model;
 import org.vinio.repositories.BrandRepository;
 import org.vinio.repositories.ModelRepository;
@@ -25,7 +23,7 @@ public class ModelServiceImpl implements ModelService<UUID> {
     }
 
     @Override
-    public void Save(ModelDTO modelDTO) {
+    public void save(ModelDTO modelDTO) {
         try {modelRepository.save(modelMapper.map(modelDTO, Model.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
@@ -37,12 +35,13 @@ public class ModelServiceImpl implements ModelService<UUID> {
         }
     }
     @Override
-    public void Update(ModelDTO modelDTO) {Save(modelDTO);}
+    public void update(ModelDTO modelDTO) {
+        save(modelDTO);}
 
     @Override
-    public void Delete(UUID uuid) {modelRepository.deleteById(uuid);}
+    public void delete(UUID uuid) {modelRepository.deleteById(uuid);}
 
-    @Override
+    /*@Override
     public void addBrand(UUID brandId, ModelDTO modelDTO) {
         Brand brand = brandRepository.findById(brandId).orElseThrow();
         if (brand != null) {
@@ -52,5 +51,5 @@ public class ModelServiceImpl implements ModelService<UUID> {
         } else {
             throw new IllegalArgumentException("Brand with id " + brandId + " not found");
         }
-    }
+    }*/
 }
