@@ -14,17 +14,18 @@ import java.util.UUID;
 @Table(name = "offers")
 public class Offer {
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", nullable = false)
     private UUID id;
     @Column(name = "description", length = 255, nullable = false)
     private String description;
     @Column(name = "engine")
     private Engine engine;
+
     @Column(name = "image_url")
     private URL imageUrl;
     @Column(name = "mileage")
     private int mileage;
-//    todo decimal
+    //    todo decimal
     @Column(name = "price")
     private BigDecimal price;
     @Column(name = "transmission")
@@ -35,11 +36,14 @@ public class Offer {
     private LocalDateTime created;
     @Column(name = "modified")
     private LocalDateTime modified;
-    @OneToOne
-    @JoinColumn(name = "model_id")
+
+    //    todo lazy
+
+    @ManyToOne
+    @JoinColumn(name = "model_id", unique = true)
     private Model model;
-    @OneToOne
-    @JoinColumn(name = "seller_id")
+    @ManyToOne
+    @JoinColumn(name = "seller_id", unique = true)
     private User seller;
 }
 

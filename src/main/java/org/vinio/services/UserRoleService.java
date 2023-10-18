@@ -4,8 +4,8 @@ import org.vinio.dtos.UserRoleDTO;
 
 public interface UserRoleService<ID> {
 //    crud
-    void Save(UserRoleDTO userRoleDTO);
+    void save(UserRoleDTO userRoleDTO);
     UserRoleDTO get(ID id);
-    void Update(UserRoleDTO brandDTO);
-    void Delete(ID id);
+    void update(UserRoleDTO brandDTO);
+    void delete(ID id);
 }

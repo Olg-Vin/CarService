@@ -4,10 +4,8 @@ import org.vinio.dtos.ModelDTO;
 
 public interface ModelService<ID> {
 //    crud
-    void Save(ModelDTO modelDTO);
+    void save(ModelDTO modelDTO);
     ModelDTO get(ID id);
-    void Update(ModelDTO modelDTO);
-    void Delete(ID id);
-//    add connection
-    void addBrand(ID id);
+    void update(ModelDTO modelDTO);
+    void delete(ID id);
 }
