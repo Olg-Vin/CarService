@@ -14,6 +14,7 @@ public class UserRole {
     @Column(name = "id", nullable = false)
     private UUID id;
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "role")

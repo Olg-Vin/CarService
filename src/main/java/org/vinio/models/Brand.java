@@ -19,6 +19,7 @@ public class Brand {
     private LocalDateTime created;
     @Column(name = "modified")
     private LocalDateTime modified;
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brand")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Model> models;
 }

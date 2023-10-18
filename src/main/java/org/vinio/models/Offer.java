@@ -19,16 +19,18 @@ public class Offer {
     @Column(name = "description", length = 255, nullable = false)
     private String description;
     @Column(name = "engine")
+    @Enumerated(EnumType.STRING)
     private Engine engine;
 
     @Column(name = "image_url")
-    private URL imageUrl;
+    private String imageUrl;
     @Column(name = "mileage")
     private int mileage;
     //    todo decimal
     @Column(name = "price")
     private BigDecimal price;
     @Column(name = "transmission")
+    @Enumerated(EnumType.STRING)
     private Transmission transmission;
     @Column(name = "year")
     private Year year;

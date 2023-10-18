@@ -25,10 +25,10 @@ public class Model {
     private String name;
 
     @Column(name = "category")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
-//    todo string вместо url??
+    //    todo string вместо url??
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -45,8 +45,10 @@ public class Model {
 
     @ManyToOne
     @JoinColumn(name = "brand_id", unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Brand brand;
 
     @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Offer> offers;
 }

@@ -32,7 +32,7 @@ public class User {
     private UserRole role;
 
     @Column(name = "image_url", nullable = false)
-    private URL imageUrl;
+    private String imageUrl;
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
     @Column(name = "modified", nullable = false)

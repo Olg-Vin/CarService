@@ -11,8 +11,10 @@ import org.vinio.services.BrandService;
 import java.util.UUID;
 
 public class BrandServiceImpl implements BrandService<UUID> {
+//    @Autowired
     private final BrandRepository brandRepository;
     private final ModelMapper modelMapper;
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public BrandServiceImpl(BrandRepository brandRepository, ModelMapper modelMapper) {
         this.brandRepository = brandRepository;

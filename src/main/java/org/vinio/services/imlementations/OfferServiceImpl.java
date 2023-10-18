@@ -15,7 +15,7 @@ public class OfferServiceImpl implements OfferService<UUID> {
     private final OfferRepository offerRepository;
     private final ModelRepository modelRepository;
     private final UserRepository userRepository;
-
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public OfferServiceImpl(ModelMapper modelMapper, OfferRepository offerRepository,
                             ModelRepository modelRepository, UserRepository userRepository) {

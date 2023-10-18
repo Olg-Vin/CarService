@@ -15,6 +15,7 @@ public class ModelServiceImpl implements ModelService<UUID> {
     private final ModelRepository modelRepository;
     private final ModelMapper modelMapper;
     private final BrandRepository brandRepository;
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public ModelServiceImpl(ModelRepository modelRepository, ModelMapper modelMapper, BrandRepository brandRepository) {
         this.modelRepository = modelRepository;

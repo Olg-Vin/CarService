@@ -13,6 +13,7 @@ public class UserServiceImpl implements UserService<UUID> {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository,
                            UserRoleRepository userRoleRepository) {
