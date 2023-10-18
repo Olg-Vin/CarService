@@ -38,7 +38,7 @@ public class User {
     @Column(name = "modified", nullable = false)
     private LocalDateTime modified;
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<User> users;
 }
