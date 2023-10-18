@@ -1,11 +1,13 @@
 package org.vinio.dtos;
 
+import lombok.Data;
 import org.vinio.models.UserRole;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
 public class UserDTO {
     private UUID id;
     private String username;

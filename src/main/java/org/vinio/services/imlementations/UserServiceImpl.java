@@ -3,6 +3,7 @@ package org.vinio.services.imlementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 import org.vinio.dtos.OfferDTO;
 import org.vinio.dtos.UserDTO;
 import org.vinio.models.Model;
@@ -13,11 +14,11 @@ import org.vinio.services.UserService;
 
 import java.util.UUID;
 
+@Service
 public class UserServiceImpl implements UserService<UUID> {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository,
                            UserRoleRepository userRoleRepository) {

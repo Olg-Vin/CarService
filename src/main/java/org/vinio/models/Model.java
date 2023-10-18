@@ -19,7 +19,7 @@ import java.util.UUID;
 @Table(name = "models")
 public class Model {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private UUID id;
     @Column(name = "name", length = 255, nullable = false)

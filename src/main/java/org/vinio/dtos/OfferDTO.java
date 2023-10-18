@@ -1,5 +1,6 @@
 package org.vinio.dtos;
 
+import lombok.Data;
 import org.vinio.models.Model;
 import org.vinio.models.User;
 import org.vinio.models.enums.Engine;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.UUID;
 
+@Data
 public class OfferDTO {
     private UUID id;
     private String description;

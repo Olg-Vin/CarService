@@ -3,6 +3,7 @@ package org.vinio.services.imlementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 import org.vinio.dtos.BrandDTO;
 import org.vinio.models.Brand;
 import org.vinio.repositories.BrandRepository;
@@ -10,11 +11,11 @@ import org.vinio.services.BrandService;
 
 import java.util.UUID;
 
+@Service
 public class BrandServiceImpl implements BrandService<UUID> {
-//    @Autowired
+    @Autowired
     private final BrandRepository brandRepository;
     private final ModelMapper modelMapper;
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public BrandServiceImpl(BrandRepository brandRepository, ModelMapper modelMapper) {
         this.brandRepository = brandRepository;

@@ -3,6 +3,7 @@ package org.vinio.services.imlementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 import org.vinio.dtos.OfferDTO;
 import org.vinio.models.Offer;
 import org.vinio.repositories.ModelRepository;
@@ -12,12 +13,12 @@ import org.vinio.services.OfferService;
 
 import java.util.UUID;
 
+@Service
 public class OfferServiceImpl implements OfferService<UUID> {
     private final ModelMapper modelMapper;
     private final OfferRepository offerRepository;
     private final ModelRepository modelRepository;
     private final UserRepository userRepository;
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public OfferServiceImpl(ModelMapper modelMapper, OfferRepository offerRepository,
                             ModelRepository modelRepository, UserRepository userRepository) {
