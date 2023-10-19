@@ -30,7 +30,8 @@ public class User {
 
     //    todo lazy
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     @JoinColumn(name = "role_id")
     private UserRole role;
 

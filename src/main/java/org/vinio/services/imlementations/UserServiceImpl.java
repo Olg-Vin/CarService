@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService<UUID> {
     }
 
     @Override
-    public UUID saveAndGetId(UserDTO userDTO) {
-        try {return userRepository.save(modelMapper.map(userDTO, User.class)).getId();}
+    public UserDTO saveAndGetId(UserDTO userDTO) {
+        try {return modelMapper.map(userRepository.save(modelMapper.map(userDTO, User.class)), UserDTO.class);}
         catch (DataAccessException e){System.out.println("Ошибка сохранения " + e.getMessage());return null;}
     }
 

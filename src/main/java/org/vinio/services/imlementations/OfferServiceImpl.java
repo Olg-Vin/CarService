@@ -30,8 +30,8 @@ public class OfferServiceImpl implements OfferService<UUID> {
     }
 
     @Override
-    public UUID saveAndGetId(OfferDTO offerDTO) {
-        try {return offerRepository.save(modelMapper.map(offerDTO, Offer.class)).getId();}
+    public OfferDTO saveAndGetId(OfferDTO offerDTO) {
+        try {return modelMapper.map(offerRepository.save(modelMapper.map(offerDTO, Offer.class)), OfferDTO.class);}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
 

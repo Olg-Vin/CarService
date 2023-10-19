@@ -34,9 +34,9 @@ public class Model {
     private String imageUrl;
 
     @Column(name = "start_year")
-    private LocalDate startYear;
+    private int startYear;
     @Column(name = "end_year")
-    private LocalDate endYear;
+    private int endYear;
     @Column(name = "created")
     private LocalDateTime created;
     @Column(name = "modified")
@@ -44,10 +44,11 @@ public class Model {
 
 //    todo lazy
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @OneToMany(mappedBy = "model", cascade = CascadeType.PERSIST)
+//    TODO CASCADE TYPE
+    @OneToMany(mappedBy = "model")
     private List<Offer> offers;
 }

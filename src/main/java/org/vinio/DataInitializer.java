@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.vinio.dtos.BrandDTO;
-import org.vinio.dtos.ModelDTO;
-import org.vinio.dtos.UserDTO;
-import org.vinio.dtos.UserRoleDTO;
+import org.vinio.dtos.*;
 import org.vinio.models.enums.Role;
 import org.vinio.services.*;
 
@@ -20,16 +17,16 @@ import java.util.UUID;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
-    private final BrandService brandService;
-    private final ModelService modelService;
-    private final OfferService offerService;
-    private final UserService userService;
-    private final UserRoleService userRoleService;
+    private final BrandService<UUID> brandService;
+    private final ModelService<UUID> modelService;
+    private final OfferService<UUID> offerService;
+    private final UserService<UUID> userService;
+    private final UserRoleService<UUID> userRoleService;
 
     @Autowired
-    public DataInitializer(BrandService brandService, ModelService modelService,
-                           OfferService offerService, UserService userService,
-                           UserRoleService userRoleService) {
+    public DataInitializer(BrandService<UUID> brandService, ModelService<UUID> modelService,
+                           OfferService<UUID> offerService, UserService<UUID> userService,
+                           UserRoleService<UUID> userRoleService) {
         this.brandService = brandService;
         this.modelService = modelService;
         this.offerService = offerService;
@@ -40,9 +37,10 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         List<BrandDTO> brandDTOS = addBrands();
-        addModels(brandDTOS);
+        List<ModelDTO> modelDTOS = addModels(brandDTOS);
 //        brandService.delete(brandDTOS.get(0).getId());
-        addUsers();
+        List<UserDTO> userDTOS = addUsers();
+        addOffers(userDTOS, modelDTOS);
     }
     private List<BrandDTO> addBrands(){
         List<BrandDTO> list = new ArrayList<>();
@@ -64,19 +62,19 @@ public class DataInitializer implements CommandLineRunner {
         for (String s:names){
             ModelDTO modelDTO = new ModelDTO();
             modelDTO.setName(s);
-            modelDTO.setEndYear(LocalDate.now());
+            modelDTO.setEndYear(LocalDate.now().getYear());
             modelDTO.setCreated(LocalDateTime.now());
             modelDTO.setModified(LocalDateTime.now());
             Random random = new Random();
             int randomNumber = random.nextInt(5) + 1;
             modelDTO.setBrand(brandDTOS.get(--randomNumber));
+            modelDTO.setStartYear(LocalDate.now().getYear());
             list.add(modelService.saveAndGetId(modelDTO));
         }
         return list;
     }
 
     private List<UserDTO> addUsers(){
-        int i = 0;
         List<UserDTO> list = new ArrayList<>();
         String[] names = new String[]{"Mirio", "Uraraca", "Shou","Kenma","Itto"};
         for (String s:names){
@@ -87,39 +85,23 @@ public class DataInitializer implements CommandLineRunner {
             UserRoleDTO userRoleDTO = new UserRoleDTO();
             userRoleDTO.setRole(Role.valueOf("User"));
             userDTO.setRole(userRoleDTO);
-            userDTO.setUsername(names[i]);
-            userService.save(userDTO);
-            i++;
+            userDTO.setUsername(s);
+            list.add(userService.saveAndGetId(userDTO));
         }
         return list;
     }
-    /*
-    // Создание начальных данных для Offer
-    Offer offer1 = new Offer();
-        offer1.setDescription("This is a description for offer one.");
-        offer1.setEngine(Offer.Engine.GASOLINE);
-        offer1.setImageUrl("http://example.com/offer1.jpg");
-        offer1.setMileage(25000);
-        offer1.setPrice(30000.00);
-        offer1.setTransmission(Offer.Transmission.AUTOMATIC);
-        offer1.setYear(2010);
-        offer1.setCreated(new Date());
-        offer1.setModified(new Date());
-        offer1.setModel(model1);
-        offer1.setSeller(user1);
-        offerService.save(offer1);
-
-    Offer offer2 = new Offer();
-        offer2.setDescription("This is a description for offer two.");
-        offer2.setEngine(Offer.Engine.DIESEL);
-        offer2.setImageUrl("http://example.com/offer2.jpg");
-        offer2.setMileage(10000);
-        offer2.setPrice(45000.00);
-        offer2.setTransmission(Offer.Transmission.MANUAL);
-        offer2.setYear(2015);
-        offer2.setCreated(new Date());
-        offer2.setModified(new Date());
-        offer2.setModel(model2);
-        offer2.setSeller(user2);
-        offerService.save(offer2);*/
+    private List<OfferDTO> addOffers(List<UserDTO> userDTOList, List<ModelDTO> modelDTOList){
+        int i = 0;
+        List<OfferDTO> list = new ArrayList<>();
+        String[] names = new String[]{"text1", "text2", "text3","text4","text5"};
+        for (String s:names){
+            OfferDTO offerDTO = new OfferDTO();
+            offerDTO.setDescription(s);
+            offerDTO.setModel(modelDTOList.get(i));
+            offerDTO.setSeller(userDTOList.get(i));
+            i++;
+            list.add(offerService.saveAndGetId(offerDTO));
+        }
+        return list;
+    }
 }
