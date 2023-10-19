@@ -24,7 +24,7 @@ public class Brand {
     @Column(name = "modified")
     private LocalDateTime modified;
 
-    @OneToMany(mappedBy = "brand")
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.REMOVE)
+//    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Model> models;
 }

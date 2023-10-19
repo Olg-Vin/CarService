@@ -19,29 +19,28 @@ public class User {
     private UUID id;
     @Column(name = "username", length = 255, nullable = false, unique = true)
     private String username;
-    @Column(name = "password", length = 255, nullable = false)
+    @Column(name = "password", length = 255)
     private String password;
-    @Column(name = "first_name", length = 255, nullable = false)
+    @Column(name = "first_name", length = 255)
     private String firstName;
-    @Column(name = "last_name", length = 255, nullable = false)
+    @Column(name = "last_name", length = 255)
     private String lastName;
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private boolean isActive;
 
     //    todo lazy
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", unique = true)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "role_id")
     private UserRole role;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url")
     private String imageUrl;
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     private LocalDateTime created;
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     private LocalDateTime modified;
 
     @OneToMany(mappedBy = "seller")
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Offer> offers;
 }

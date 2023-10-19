@@ -44,12 +44,10 @@ public class Model {
 
 //    todo lazy
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "brand_id", unique = true)
-//    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "brand_id")
     private Brand brand;
 
     @OneToMany(mappedBy = "model", cascade = CascadeType.PERSIST)
-//    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Offer> offers;
 }

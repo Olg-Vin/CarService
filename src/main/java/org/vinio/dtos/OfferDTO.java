@@ -17,7 +17,7 @@ public class OfferDTO {
     private UUID id;
     private String description;
     private Engine engine;
-    private URL imageUrl;
+    private String imageUrl;
     private int mileage;
     //    todo decimal
     private BigDecimal price;
@@ -25,6 +25,6 @@ public class OfferDTO {
     private Year year;
     private LocalDateTime created;
     private LocalDateTime modified;
-    private Model model;
-    private User seller;
+    private ModelDTO model;
+    private UserDTO seller;
 }

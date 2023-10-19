@@ -21,6 +21,5 @@ public class UserRole {
     private Role role;
 
     @OneToMany(mappedBy = "role")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<User> users;
 }

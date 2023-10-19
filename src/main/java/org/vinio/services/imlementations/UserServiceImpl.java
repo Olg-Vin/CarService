@@ -28,13 +28,13 @@ public class UserServiceImpl implements UserService<UUID> {
     @Override
     public void save(UserDTO userDTO) {
         try {userRepository.save(modelMapper.map(userDTO, User.class));}
-        catch (DataAccessException e){System.out.println("Ошибка сохранения");}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения " + e.getMessage());}
     }
 
     @Override
     public UUID saveAndGetId(UserDTO userDTO) {
         try {return userRepository.save(modelMapper.map(userDTO, User.class)).getId();}
-        catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения " + e.getMessage());return null;}
     }
 
     @Override

@@ -19,9 +19,10 @@ public class Offer {
     @GeneratedValue
     @Column(name = "id", nullable = false)
     private UUID id;
-    @Column(name = "description", length = 255, nullable = false)
+    @Column(name = "description")
     private String description;
     @Column(name = "engine")
+
     @Enumerated(EnumType.STRING)
     private Engine engine;
 
@@ -45,10 +46,10 @@ public class Offer {
     //    todo lazy
 
     @ManyToOne
-    @JoinColumn(name = "model_id", unique = true)
+    @JoinColumn(name = "model_id")
     private Model model;
     @ManyToOne
-    @JoinColumn(name = "seller_id", unique = true)
+    @JoinColumn(name = "seller_id")
     private User seller;
 }
 

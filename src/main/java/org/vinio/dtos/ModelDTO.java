@@ -14,11 +14,11 @@ public class ModelDTO {
     private UUID id;
     private String name;
     private Category category;
-    private URL imageUrl;
+    private String imageUrl;
     private LocalDate startYear;
     private LocalDate endYear;
     private LocalDateTime created;
     private LocalDateTime modified;
-    private Brand brand;
+    private BrandDTO brand;
 }
 

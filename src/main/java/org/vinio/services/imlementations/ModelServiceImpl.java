@@ -26,13 +26,13 @@ public class ModelServiceImpl implements ModelService<UUID> {
     @Override
     public void save(ModelDTO modelDTO) {
         try {modelRepository.save(modelMapper.map(modelDTO, Model.class));}
-        catch (DataAccessException e){System.out.println("Ошибка сохранения");}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения " + e.getMessage());}
     }
 
     @Override
-    public UUID saveAndGetId(ModelDTO modelDTO) {
-        try {return modelRepository.save(modelMapper.map(modelDTO, Model.class)).getId();}
-        catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
+    public ModelDTO saveAndGetId(ModelDTO modelDTO) {
+        try {return modelMapper.map(modelRepository.save(modelMapper.map(modelDTO, Model.class)), ModelDTO.class);}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения " + e.getMessage());return null;}
     }
 
     @Override
