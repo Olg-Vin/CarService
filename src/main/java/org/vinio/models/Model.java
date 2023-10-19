@@ -19,7 +19,7 @@ import java.util.UUID;
 @Table(name = "models")
 public class Model {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     private UUID id;
     @Column(name = "name", length = 255, nullable = false)
@@ -44,12 +44,12 @@ public class Model {
 
 //    todo lazy
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "brand_id", unique = true)
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+//    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private Brand brand;
 
-    @OneToMany(mappedBy = "model")
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    @OneToMany(mappedBy = "model", cascade = CascadeType.PERSIST)
+//    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Offer> offers;
 }

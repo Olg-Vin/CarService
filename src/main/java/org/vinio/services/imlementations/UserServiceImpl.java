@@ -18,19 +18,23 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService<UUID> {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
     @Autowired
-    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository,
-                           UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
+
     }
 
     @Override
     public void save(UserDTO userDTO) {
         try {userRepository.save(modelMapper.map(userDTO, User.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
+    }
+
+    @Override
+    public UUID saveAndGetId(UserDTO userDTO) {
+        try {return userRepository.save(modelMapper.map(userDTO, User.class)).getId();}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
 
     @Override

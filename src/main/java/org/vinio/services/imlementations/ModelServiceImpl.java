@@ -16,12 +16,11 @@ import java.util.UUID;
 public class ModelServiceImpl implements ModelService<UUID> {
     private final ModelRepository modelRepository;
     private final ModelMapper modelMapper;
-    private final BrandRepository brandRepository;
+
     @Autowired
-    public ModelServiceImpl(ModelRepository modelRepository, ModelMapper modelMapper, BrandRepository brandRepository) {
+    public ModelServiceImpl(ModelRepository modelRepository, ModelMapper modelMapper) {
         this.modelRepository = modelRepository;
         this.modelMapper = modelMapper;
-        this.brandRepository = brandRepository;
     }
 
     @Override
@@ -29,6 +28,13 @@ public class ModelServiceImpl implements ModelService<UUID> {
         try {modelRepository.save(modelMapper.map(modelDTO, Model.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
+
+    @Override
+    public UUID saveAndGetId(ModelDTO modelDTO) {
+        try {return modelRepository.save(modelMapper.map(modelDTO, Model.class)).getId();}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
+    }
+
     @Override
     public ModelDTO get(UUID uuid) {
         try {return modelMapper.map(modelRepository.findById(uuid), ModelDTO.class);}

@@ -17,21 +17,22 @@ import java.util.UUID;
 public class OfferServiceImpl implements OfferService<UUID> {
     private final ModelMapper modelMapper;
     private final OfferRepository offerRepository;
-    private final ModelRepository modelRepository;
-    private final UserRepository userRepository;
     @Autowired
-    public OfferServiceImpl(ModelMapper modelMapper, OfferRepository offerRepository,
-                            ModelRepository modelRepository, UserRepository userRepository) {
+    public OfferServiceImpl(ModelMapper modelMapper, OfferRepository offerRepository) {
         this.modelMapper = modelMapper;
         this.offerRepository = offerRepository;
-        this.modelRepository = modelRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
     public void save(OfferDTO offerDTO) {
         try {offerRepository.save(modelMapper.map(offerDTO, Offer.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
+    }
+
+    @Override
+    public UUID saveAndGetId(OfferDTO offerDTO) {
+        try {return offerRepository.save(modelMapper.map(offerDTO, Offer.class)).getId();}
+        catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
 
     // todo referenceById

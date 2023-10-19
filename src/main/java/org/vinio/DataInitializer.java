@@ -3,12 +3,18 @@ package org.vinio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.vinio.dtos.BrandDTO;
+import org.vinio.dtos.ModelDTO;
+import org.vinio.dtos.UserRoleDTO;
+import org.vinio.models.enums.Role;
 import org.vinio.services.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -31,39 +37,50 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        addBrands();
+        List<BrandDTO> brandDTOS = addBrands();
+        List<UUID> roleUuids = addRoles();
     }
 
-    public void addBrands(){
+    private List<BrandDTO> addBrands(){
+        List<BrandDTO> list = new ArrayList<>();
         String[] names = new String[]{"BMW", "Lada", "Audi","Mini","Kia"};
         for (String s:names){
             BrandDTO brandDTO = new BrandDTO();
             brandDTO.setName(s);
             brandDTO.setCreated(LocalDateTime.now());
             brandDTO.setModified(LocalDateTime.now());
-            brandService.save(brandDTO);
+            list.add(brandService.saveAndGetId(brandDTO));
         }
+        return list;
     }
-    /*Brand brand1 = new Brand();
-        brand1.setName("Brand One");
-        brand1.setCreated(new Date());
-        brand1.setModified(new Date());
-        brandService.save(brand1);
+    private List<UUID> addRoles(){
+        List<UUID> uuids = new ArrayList<>();
+        UserRoleDTO userRoleDTO = new UserRoleDTO();
+        userRoleDTO.setRole(Role.Admin);
+        uuids.add(userRoleService.saveAndGetId(userRoleDTO));
+        for (int i = 0; i < 4; i++) {
+            userRoleDTO = new UserRoleDTO();
+            userRoleDTO.setRole(Role.valueOf("User"));
+            uuids.add(userRoleService.saveAndGetId(userRoleDTO));
+        }
+        return uuids;
+    }
+    private List<ModelDTO> addModels(List<BrandDTO> brandDTOS){
+        List<ModelDTO> list = new ArrayList<>();
+        String[] names = new String[]{"rt56", "shy7", "sj-j7","shy6","s7yf"};
+        for (String s:names){
+            ModelDTO modelDTO = new ModelDTO();
+            modelDTO.setName(s);
+            modelDTO.setEndYear(LocalDate.now());
+            modelDTO.setCreated(LocalDateTime.now());
+            modelDTO.setModified(LocalDateTime.now());
+            list.add(brandService.saveAndGetId(brandDTO));
+        }
+        return list;
+    }
 
-    Brand brand2 = new Brand();
-        brand2.setName("Brand Two");
-        brand2.setCreated(new Date());
-        brand2.setModified(new Date());
-        brandService.save(brand2);
 
-    UserRole userRole1 = new UserRole();
-        userRole1.setRole(UserRole.Role.USER);
-        userRoleService.save(userRole1);
-
-    UserRole userRole2 = new UserRole();
-        userRole2.setRole(UserRole.Role.ADMIN);
-        userRoleService.save(userRole2);
-
+    /*
     User user2 = new User();
         user2.setUsername("usertwo");
         user2.setPassword("password");
