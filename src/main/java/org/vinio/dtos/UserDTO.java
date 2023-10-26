@@ -17,6 +17,4 @@ public class UserDTO {
     private boolean isActive;
     private UserRoleDTO role;
     private String imageUrl;
-    private LocalDateTime created;
-    private LocalDateTime modified;
 }

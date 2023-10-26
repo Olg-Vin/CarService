@@ -6,7 +6,6 @@ import org.vinio.models.enums.Engine;
 import org.vinio.models.enums.Transmission;
 
 import java.math.BigDecimal;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.UUID;
@@ -14,11 +13,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "offers")
-public class Offer {
-    @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class Offer extends BaseEntityCM{
+
     @Column(name = "description")
     private String description;
     @Column(name = "engine")
@@ -38,10 +34,6 @@ public class Offer {
     private Transmission transmission;
     @Column(name = "year")
     private Year year;
-    @Column(name = "created")
-    private LocalDateTime created;
-    @Column(name = "modified")
-    private LocalDateTime modified;
 
     //    todo lazy
 

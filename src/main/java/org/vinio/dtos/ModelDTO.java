@@ -17,8 +17,6 @@ public class ModelDTO {
     private String imageUrl;
     private int startYear;
     private int endYear;
-    private LocalDateTime created;
-    private LocalDateTime modified;
     private BrandDTO brand;
 }
 

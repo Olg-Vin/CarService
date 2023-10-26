@@ -23,8 +23,6 @@ public class OfferDTO {
     private BigDecimal price;
     private Transmission transmission;
     private Year year;
-    private LocalDateTime created;
-    private LocalDateTime modified;
     private ModelDTO model;
     private UserDTO seller;
 }

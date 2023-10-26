@@ -29,7 +29,9 @@ public class BrandServiceImpl implements BrandService<UUID> {
 
     @Override
     public BrandDTO saveAndGetId(BrandDTO brandDTO) {
-        try { return modelMapper.map(brandRepository.save(modelMapper.map(brandDTO, Brand.class)), BrandDTO.class);}
+        try {
+            return modelMapper.map(brandRepository.save(modelMapper.map(brandDTO, Brand.class)), BrandDTO.class);
+        }
         catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
 

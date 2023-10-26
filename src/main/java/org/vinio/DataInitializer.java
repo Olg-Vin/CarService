@@ -43,7 +43,7 @@ public class DataInitializer implements CommandLineRunner {
         List<UserDTO> userDTOS = addUsers();
         addOffers(userDTOS, modelDTOS);
 
-        printSomething(modelDTOS.get(0).getId());
+//        printSomething(modelDTOS.get(0).getId());
     }
     private List<BrandDTO> addBrands(){
         List<BrandDTO> list = new ArrayList<>();
@@ -51,8 +51,6 @@ public class DataInitializer implements CommandLineRunner {
         for (String s:names){
             BrandDTO brandDTO = new BrandDTO();
             brandDTO.setName(s);
-            brandDTO.setCreated(LocalDateTime.now());
-            brandDTO.setModified(LocalDateTime.now());
             list.add(brandService.saveAndGetId(brandDTO));
 //            list.add(brandDTO);
         }
@@ -66,8 +64,6 @@ public class DataInitializer implements CommandLineRunner {
             ModelDTO modelDTO = new ModelDTO();
             modelDTO.setName(s);
             modelDTO.setEndYear(LocalDate.now().getYear());
-            modelDTO.setCreated(LocalDateTime.now());
-            modelDTO.setModified(LocalDateTime.now());
             modelDTO.setCategory(Category.Motorcycle);
             Random random = new Random();
             int randomNumber = random.nextInt(5) + 1;
@@ -84,8 +80,6 @@ public class DataInitializer implements CommandLineRunner {
         for (String s:names){
             UserDTO userDTO = new UserDTO();
             userDTO.setActive(true);
-            userDTO.setCreated(LocalDateTime.now());
-            userDTO.setModified(LocalDateTime.now());
             UserRoleDTO userRoleDTO = new UserRoleDTO();
             userRoleDTO.setRole(Role.valueOf("User"));
             userDTO.setRole(userRoleDTO);

@@ -11,6 +11,4 @@ import java.util.UUID;
 public class BrandDTO {
     private UUID id;
     private String name;
-    private LocalDateTime created;
-    private LocalDateTime modified; // локальная дата, только для личного пользования
 }

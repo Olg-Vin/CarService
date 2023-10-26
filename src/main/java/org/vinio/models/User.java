@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -12,11 +11,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class User extends BaseEntityCM{
+
     @Column(name = "username", length = 255, nullable = false, unique = true)
     private String username;
     @Column(name = "password", length = 255)
@@ -37,10 +33,6 @@ public class User {
 
     @Column(name = "image_url")
     private String imageUrl;
-    @Column(name = "created")
-    private LocalDateTime created;
-    @Column(name = "modified")
-    private LocalDateTime modified;
 
     @OneToMany(mappedBy = "seller")
     private List<Offer> offers;
