@@ -43,7 +43,7 @@ public class DataInitializer implements CommandLineRunner {
         List<UserDTO> userDTOS = addUsers();
         addOffers(userDTOS, modelDTOS);
 
-//        printSomething(modelDTOS.get(0).getId());
+        printSomething(modelDTOS.get(0).getId());
     }
     private List<BrandDTO> addBrands(){
         List<BrandDTO> list = new ArrayList<>();
