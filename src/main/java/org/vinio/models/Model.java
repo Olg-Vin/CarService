@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.vinio.models.enums.Category;
+import org.vinio.models.enums.converters.CategoryConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -25,14 +26,12 @@ public class Model {
     @Column(name = "name", length = 255, nullable = false)
     private String name;
 
+    @Convert(converter = CategoryConverter.class)
     @Column(name = "category")
-    @Enumerated(EnumType.STRING)
     private Category category;
 
-    //    todo string вместо url??
     @Column(name = "image_url")
     private String imageUrl;
-
     @Column(name = "start_year")
     private int startYear;
     @Column(name = "end_year")

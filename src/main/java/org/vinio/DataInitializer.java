@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.vinio.dtos.*;
+import org.vinio.models.enums.Category;
 import org.vinio.models.enums.Role;
 import org.vinio.services.*;
 
@@ -41,6 +42,8 @@ public class DataInitializer implements CommandLineRunner {
 //        brandService.delete(brandDTOS.get(0).getId());
         List<UserDTO> userDTOS = addUsers();
         addOffers(userDTOS, modelDTOS);
+
+        printSomething(modelDTOS.get(0).getId());
     }
     private List<BrandDTO> addBrands(){
         List<BrandDTO> list = new ArrayList<>();
@@ -65,6 +68,7 @@ public class DataInitializer implements CommandLineRunner {
             modelDTO.setEndYear(LocalDate.now().getYear());
             modelDTO.setCreated(LocalDateTime.now());
             modelDTO.setModified(LocalDateTime.now());
+            modelDTO.setCategory(Category.Motorcycle);
             Random random = new Random();
             int randomNumber = random.nextInt(5) + 1;
             modelDTO.setBrand(brandDTOS.get(--randomNumber));
@@ -103,5 +107,8 @@ public class DataInitializer implements CommandLineRunner {
             list.add(offerService.saveAndGetId(offerDTO));
         }
         return list;
+    }
+    private void printSomething(UUID modelsUuid){
+        System.out.println(modelService.get(modelsUuid));
     }
 }
