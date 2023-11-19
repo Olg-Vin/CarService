@@ -9,6 +9,7 @@ public interface BrandService<ID> {
     void save(BrandDTO brandDTO);
     BrandDTO saveAndGetId(BrandDTO brandDTO);
     BrandDTO get(ID id);
+
     void update(BrandDTO brandDTO);
     void delete(ID id);
 }

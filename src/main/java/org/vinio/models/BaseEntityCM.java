@@ -5,24 +5,33 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.Data;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
 @MappedSuperclass
-@Data
 public abstract class BaseEntityCM extends BaseEntityId {
-    @Column(name = "created")
     private LocalDateTime created;
-    @Column(name = "modified")
     private LocalDateTime modified;
 
     @PrePersist
-    void setCreated(){
+    void setCreated() {
         created = LocalDateTime.now();
     }
 
     @PreUpdate
-    void setModified(){
+    void setModified() {
         modified = LocalDateTime.now();
+    }
+
+    @Column(name = "created")
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    @Column(name = "modified")
+    public LocalDateTime getModified() {
+        return modified;
     }
 }

@@ -7,5 +7,5 @@ import org.vinio.models.UserRole;
 import java.util.UUID;
 
 @Repository
-public interface UserRoleRepository extends JpaRepository<UserRole, UUID> {
+public interface UserRoleRepository extends JpaRepository<UserRole, String > {
 }

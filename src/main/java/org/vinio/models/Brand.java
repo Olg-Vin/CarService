@@ -1,21 +1,29 @@
 package org.vinio.models;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
+@Setter
 @Entity
-@Data
 @Table(name = "brands")
-public class Brand extends BaseEntityCM{
-    @Column(name = "name", length = 255, nullable = false, unique = true)
+public class Brand extends BaseEntityCM {
     private String name;
+    private Set<Model> models;
 
+    @Column(name = "name", length = 255, nullable = false, unique = true)
+    public String getName() {
+        return name;
+    }
     @OneToMany(mappedBy = "brand")
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
-    private List<Model> models;
+    public Set<Model> getModels() {
+        return models;
+    }
 }

@@ -12,7 +12,7 @@ import org.vinio.services.BrandService;
 import java.util.UUID;
 
 @Service
-public class BrandServiceImpl implements BrandService<UUID> {
+public class BrandServiceImpl implements BrandService<String > {
     @Autowired
     private final BrandRepository brandRepository;
     private final ModelMapper modelMapper;
@@ -36,16 +36,18 @@ public class BrandServiceImpl implements BrandService<UUID> {
     }
 
     @Override
-    public BrandDTO get(UUID uuid) {
+    public BrandDTO get(String uuid) {
         try {return modelMapper.map(brandRepository.findById(uuid), BrandDTO.class);}
         catch (Exception e){
             throw new IllegalArgumentException("Объекта brand с id " + uuid + " не существует");
         }
     }
+
+
     @Override
     public void update(BrandDTO brandDTO) {save(brandDTO);}
     @Override
-    public void delete(UUID uuid) {
+    public void delete(String uuid) {
         brandRepository.deleteById(uuid);
     }
 }

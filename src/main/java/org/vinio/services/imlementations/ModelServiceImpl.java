@@ -13,7 +13,7 @@ import org.vinio.services.ModelService;
 import java.util.UUID;
 
 @Service
-public class ModelServiceImpl implements ModelService<UUID> {
+public class ModelServiceImpl implements ModelService<String > {
     private final ModelRepository modelRepository;
     private final ModelMapper modelMapper;
 
@@ -36,7 +36,7 @@ public class ModelServiceImpl implements ModelService<UUID> {
     }
 
     @Override
-    public ModelDTO get(UUID uuid) {
+    public ModelDTO get(String uuid) {
         try {return modelMapper.map(modelRepository.findById(uuid), ModelDTO.class);}
         catch (IllegalArgumentException e){
             throw new IllegalArgumentException("Объекта model с id " + uuid + " не существует");
@@ -47,6 +47,6 @@ public class ModelServiceImpl implements ModelService<UUID> {
         save(modelDTO);}
 
     @Override
-    public void delete(UUID uuid) {modelRepository.deleteById(uuid);}
+    public void delete(String uuid) {modelRepository.deleteById(uuid);}
 
 }

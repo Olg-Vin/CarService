@@ -1,14 +1,25 @@
 package org.vinio.dtos;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-
-// излишние поля убрать по логике отображения пользователю
 @Data
+@Setter
 public class BrandDTO {
-    private UUID id;
+    private String id;
     private String name;
+
+
+    public String getId() {
+        return id;
+    }
+    @NotNull
+    @NotEmpty
+    @Length(min = 2, max = 255)
+    public String getName() {
+        return name;
+    }
 }

@@ -13,35 +13,56 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "offers")
-public class Offer extends BaseEntityCM{
+public class Offer extends BaseEntityCM {
+    private String description;
+    private Engine engine;
+    private String imageUrl;
+    private int mileage;
+    private BigDecimal price;
+    private Transmission transmission;
+    private Year year;
+    private Model model;
+    private User seller;
 
     @Column(name = "description")
-    private String description;
+    public String getDescription() {
+        return description;
+    }
     @Column(name = "engine")
-
     @Enumerated(EnumType.STRING)
-    private Engine engine;
-
+    public Engine getEngine() {
+        return engine;
+    }
     @Column(name = "image_url")
-    private String imageUrl;
-    @Column(name = "mileage")
-    private int mileage;
-    //    todo decimal
+    public String getImageUrl() {
+        return imageUrl;
+    }
     @Column(name = "price")
-    private BigDecimal price;
+    public int getMileage() {
+        return mileage;
+    }
+    @Column(name = "mileage")
+    public BigDecimal getPrice() {
+        return price;
+    }
     @Column(name = "transmission")
     @Enumerated(EnumType.STRING)
-    private Transmission transmission;
+    public Transmission getTransmission() {
+        return transmission;
+    }
     @Column(name = "year")
-    private Year year;
-
-    //    todo lazy
-
+    public Year getYear() {
+        return year;
+    }
     @ManyToOne
     @JoinColumn(name = "model_id")
-    private Model model;
+    public Model getModel() {
+        return model;
+    }
     @ManyToOne
     @JoinColumn(name = "seller_id")
-    private User seller;
+    public User getSeller() {
+        return seller;
+    }
 }
 

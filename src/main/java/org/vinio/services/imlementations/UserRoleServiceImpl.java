@@ -12,7 +12,7 @@ import org.vinio.services.UserRoleService;
 import java.util.UUID;
 
 @Service
-public class UserRoleServiceImpl implements UserRoleService<UUID> {
+public class UserRoleServiceImpl implements UserRoleService<String> {
     private UserRoleRepository userRoleRepository;
     private ModelMapper modelMapper;
 
@@ -29,13 +29,13 @@ public class UserRoleServiceImpl implements UserRoleService<UUID> {
     }
 
     @Override
-    public UUID saveAndGetId(UserRoleDTO userRoleDTO) {
+    public String saveAndGetId(UserRoleDTO userRoleDTO) {
         try {return userRoleRepository.save(modelMapper.map(userRoleDTO, UserRole.class)).getId();}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
 
     @Override
-    public UserRoleDTO get(UUID uuid) {
+    public UserRoleDTO get(String uuid) {
         try {return modelMapper.map(userRoleRepository.findById(uuid), UserRoleDTO.class);}
         catch (Exception e){
             throw new IllegalArgumentException("Объекта brand с id " + uuid + " не существует");
@@ -48,7 +48,7 @@ public class UserRoleServiceImpl implements UserRoleService<UUID> {
     }
 
     @Override
-    public void delete(UUID uuid) {
+    public void delete(String uuid) {
         userRoleRepository.deleteById(uuid);
     }
 }

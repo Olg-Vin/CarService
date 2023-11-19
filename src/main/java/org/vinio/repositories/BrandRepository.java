@@ -7,5 +7,5 @@ import org.vinio.models.Brand;
 import java.util.UUID;
 
 @Repository
-public interface BrandRepository extends JpaRepository<Brand, UUID> {
+public interface BrandRepository extends JpaRepository<Brand, String > {
 }

@@ -14,7 +14,7 @@ import org.vinio.services.OfferService;
 import java.util.UUID;
 
 @Service
-public class OfferServiceImpl implements OfferService<UUID> {
+public class OfferServiceImpl implements OfferService<String> {
     private final ModelMapper modelMapper;
     private final OfferRepository offerRepository;
     @Autowired
@@ -37,7 +37,7 @@ public class OfferServiceImpl implements OfferService<UUID> {
 
     // todo referenceById
     @Override
-    public OfferDTO get(UUID uuid) {
+    public OfferDTO get(String uuid) {
         try {
             return modelMapper.map(offerRepository.findById(uuid), OfferDTO.class);
         }catch (Exception e) {
@@ -51,7 +51,7 @@ public class OfferServiceImpl implements OfferService<UUID> {
     }
 
     @Override
-    public void delete(UUID uuid) {
+    public void delete(String uuid) {
         offerRepository.deleteById(uuid);
     }
 

@@ -2,6 +2,7 @@ package org.vinio.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
@@ -9,31 +10,50 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Data
+@Setter
 @Table(name = "users")
 public class User extends BaseEntityCM{
+    private String username;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private boolean isActive;
+    private UserRole role;
+    private String imageUrl;
+    private List<Offer> offers;
 
     @Column(name = "username", length = 255, nullable = false, unique = true)
-    private String username;
+    public String getUsername() {
+        return username;
+    }
     @Column(name = "password", length = 255)
-    private String password;
+    public String getPassword() {
+        return password;
+    }
     @Column(name = "first_name", length = 255)
-    private String firstName;
+    public String getFirstName() {
+        return firstName;
+    }
     @Column(name = "last_name", length = 255)
-    private String lastName;
+    public String getLastName() {
+        return lastName;
+    }
     @Column(name = "is_active")
-    private boolean isActive;
-
-    //    todo lazy
-
+    public boolean isActive() {
+        return isActive;
+    }
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     @JoinColumn(name = "role_id")
-    private UserRole role;
-
+    public UserRole getRole() {
+        return role;
+    }
     @Column(name = "image_url")
-    private String imageUrl;
-
+    public String getImageUrl() {
+        return imageUrl;
+    }
     @OneToMany(mappedBy = "seller")
-    private List<Offer> offers;
+    public List<Offer> getOffers() {
+        return offers;
+    }
 }
