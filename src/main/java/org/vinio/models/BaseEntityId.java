@@ -3,14 +3,19 @@ package org.vinio.models;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Data;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
-import java.util.UUID;
-
+@Setter
 @MappedSuperclass
-@Data
 public abstract class BaseEntityId {
+
+    private String id;
+
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(generator = "uuid-string")
+    @GenericGenerator(name = "uuid-string", strategy = "org.hibernate.id.UUIDGenerator")
+    public String getId() {
+        return id;
+    }
 }

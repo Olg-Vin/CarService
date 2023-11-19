@@ -18,16 +18,16 @@ import java.util.UUID;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
-    private final BrandService<UUID> brandService;
-    private final ModelService<UUID> modelService;
-    private final OfferService<UUID> offerService;
-    private final UserService<UUID> userService;
-    private final UserRoleService<UUID> userRoleService;
+    private final BrandService<String> brandService;
+    private final ModelService<String> modelService;
+    private final OfferService<String> offerService;
+    private final UserService<String> userService;
+    private final UserRoleService<String> userRoleService;
 
     @Autowired
-    public DataInitializer(BrandService<UUID> brandService, ModelService<UUID> modelService,
-                           OfferService<UUID> offerService, UserService<UUID> userService,
-                           UserRoleService<UUID> userRoleService) {
+    public DataInitializer(BrandService<String> brandService, ModelService<String> modelService,
+                           OfferService<String> offerService, UserService<String> userService,
+                           UserRoleService<String> userRoleService) {
         this.brandService = brandService;
         this.modelService = modelService;
         this.offerService = offerService;
@@ -38,12 +38,17 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         List<BrandDTO> brandDTOS = addBrands();
+        System.out.println();
+        System.out.println(brandDTOS.get(0).toString());
+        System.out.println();
         List<ModelDTO> modelDTOS = addModels(brandDTOS);
 //        brandService.delete(brandDTOS.get(0).getId());
         List<UserDTO> userDTOS = addUsers();
         addOffers(userDTOS, modelDTOS);
-
-        printSomething(modelDTOS.get(0).getId());
+        System.out.println();
+        System.out.println(brandDTOS.get(0).toString());
+        System.out.println();
+        System.out.println(modelDTOS.get(0).toString());
     }
     private List<BrandDTO> addBrands(){
         List<BrandDTO> list = new ArrayList<>();
@@ -101,8 +106,5 @@ public class DataInitializer implements CommandLineRunner {
             list.add(offerService.saveAndGetId(offerDTO));
         }
         return list;
-    }
-    private void printSomething(UUID modelsUuid){
-        System.out.println(modelService.get(modelsUuid));
     }
 }

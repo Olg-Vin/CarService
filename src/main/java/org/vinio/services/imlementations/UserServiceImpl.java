@@ -15,7 +15,7 @@ import org.vinio.services.UserService;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService<UUID> {
+public class UserServiceImpl implements UserService<String> {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     @Autowired
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService<UUID> {
     }
 
     @Override
-    public UserDTO get(UUID uuid) {
+    public UserDTO get(String uuid) {
         try {
             return modelMapper.map(userRepository.findById(uuid), UserDTO.class);
         }catch (Exception e) {
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService<UUID> {
     }
 
     @Override
-    public void delete(UUID uuid) {
+    public void delete(String uuid) {
         userRepository.deleteById(uuid);
     }
 

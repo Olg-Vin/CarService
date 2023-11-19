@@ -7,5 +7,5 @@ import org.vinio.models.Offer;
 import java.util.UUID;
 
 @Repository
-public interface OfferRepository extends JpaRepository<Offer, UUID> {
+public interface OfferRepository extends JpaRepository<Offer, String > {
 }
