@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Offer page</title>
 </head>
 <body>
-
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>Password</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Is Active</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${user}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.username}"></td>
+            <td th:text="${u.password}"></td>
+            <td th:text="${u.firstName}"></td>
+            <td th:text="${u.lastName}"></td>
+            <td th:text="${u.isActive}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

@@ -4,15 +4,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.vinio.dtos.BrandDTO;
 import org.vinio.dtos.OfferDTO;
 import org.vinio.dtos.UserDTO;
+import org.vinio.models.Brand;
 import org.vinio.models.Model;
 import org.vinio.models.User;
 import org.vinio.repositories.UserRepository;
 import org.vinio.repositories.UserRoleRepository;
 import org.vinio.services.UserService;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService<String> {
@@ -44,6 +48,14 @@ public class UserServiceImpl implements UserService<String> {
         }catch (Exception e) {
             throw new IllegalArgumentException("Объекта offer с id " + uuid + " не существует");
         }
+    }
+
+    @Override
+    public List<UserDTO> getAll() {
+        List<User> list = userRepository.findAll();
+        return list.stream()
+                .map(e->modelMapper.map(e, UserDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override

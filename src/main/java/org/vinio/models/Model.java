@@ -48,6 +48,7 @@ public class Model extends BaseEntityCM {
 
     //    todo lazy
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     @JoinColumn(name = "brand_id")
     public Brand getBrand() {
         return brand;

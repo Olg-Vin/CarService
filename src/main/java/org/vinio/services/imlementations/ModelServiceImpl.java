@@ -6,11 +6,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.vinio.dtos.ModelDTO;
 import org.vinio.models.Model;
-import org.vinio.repositories.BrandRepository;
 import org.vinio.repositories.ModelRepository;
 import org.vinio.services.ModelService;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ModelServiceImpl implements ModelService<String > {
@@ -42,6 +42,15 @@ public class ModelServiceImpl implements ModelService<String > {
             throw new IllegalArgumentException("Объекта model с id " + uuid + " не существует");
         }
     }
+
+    @Override
+    public List<ModelDTO> getAll() {
+        List<Model> list = modelRepository.findAll();
+        return list.stream()
+                .map(e->modelMapper.map(e, ModelDTO.class))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void update(ModelDTO modelDTO) {
         save(modelDTO);}

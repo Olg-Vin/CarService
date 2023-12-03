@@ -11,12 +11,20 @@ import org.vinio.services.imlementations.BrandServiceImpl;
 @Controller
 @RequestMapping("/brands")
 public class BrandController {
+    private BrandServiceImpl brandService;
     @Autowired
-    public BrandServiceImpl brandService;
+    public void setBrandService(BrandServiceImpl brandService) {
+        this.brandService = brandService;
+    }
 
     @GetMapping("/get/{id}")
     public String getBrand(@PathVariable String id, Model model){
         model.addAttribute("brand",brandService.get(id));
+        return "brand";
+    }
+    @GetMapping("/getAll")
+    public String getAllBrands(Model model){
+        model.addAttribute("brand",brandService.getAll());
         return "brand";
     }
 
@@ -29,11 +37,12 @@ public class BrandController {
     @GetMapping("/delete/{id}")
     public String deleteBrand(@PathVariable String id, Model model){
         brandService.delete(id);
-        return "main";
+        return "redirect:/main";
     }
 
     @PostMapping("/update")
     public String updateBrand(@Valid @RequestBody BrandDTO brandDTO, Model model){
-        return "main";
+        brandService.save(brandDTO);
+        return "redirect:/main";
     }
 }
