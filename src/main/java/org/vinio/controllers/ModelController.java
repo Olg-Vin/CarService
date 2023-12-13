@@ -19,30 +19,30 @@ public class ModelController {
 
     @GetMapping("/get/{id}")
     public String getModel(@PathVariable String id, Model model){
-        model.addAttribute("model",modelService.get(id));
-        return "model";
+        model.addAttribute("models",modelService.getModel(id));
+        return "model-all";
     }
     @GetMapping("/getAll")
     public String getAllModels(Model model){
-        model.addAttribute("model",modelService.getAll());
-        return "model";
+        model.addAttribute("models",modelService.getAllModels());
+        return "model-all";
     }
 
     @PostMapping("/add")
     public String addModel(@Valid @RequestBody ModelDTO modelDTO, Model model){
-        modelService.save(modelDTO);
+        modelService.add(modelDTO);
         return "redirect:/main";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteModel(@PathVariable String id, Model model){
-        modelService.delete(id);
+        modelService.removeModel(id);
         return "redirect:/main";
     }
 
     @PostMapping("/update")
     public String updateModel(@Valid @RequestBody ModelDTO modelDTO, Model model){
-        modelService.save(modelDTO);
+        modelService.add(modelDTO);
         return "redirect:/main";
     }
 }

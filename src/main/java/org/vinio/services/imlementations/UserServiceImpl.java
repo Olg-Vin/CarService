@@ -2,6 +2,7 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.vinio.dtos.BrandDTO;
@@ -51,7 +52,8 @@ public class UserServiceImpl implements UserService<String> {
     }
 
     @Override
-    public List<UserDTO> getAll() {
+    @Cacheable("users")
+    public List<UserDTO> getAllUsers() {
         List<User> list = userRepository.findAll();
         return list.stream()
                 .map(e->modelMapper.map(e, UserDTO.class))

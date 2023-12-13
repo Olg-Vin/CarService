@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.vinio.dtos.BrandDTO;
 import org.vinio.dtos.OfferDTO;
 import org.vinio.services.imlementations.OfferServiceImpl;
 
@@ -20,18 +19,18 @@ public class OfferController {
 
     @GetMapping("/get/{id}")
     public String getOffers(@PathVariable String id, Model model){
-        model.addAttribute("offer",offerService.get(id));
-        return "offer";
+        model.addAttribute("offers",offerService.getOffer(id));
+        return "offer-all";
     }
     @GetMapping("/getAll")
     public String getAllBrands(Model model){
-        model.addAttribute("offer",offerService.getAll());
-        return "offer";
+        model.addAttribute("offers",offerService.getAllOffers());
+        return "offer-all";
     }
 
     @PostMapping("/add")
     public String addOffers(@Valid @RequestBody OfferDTO offerDTO, Model model){
-        offerService.save(offerDTO);
+        offerService.add(offerDTO);
         return "redirect:/main";
     }
 
@@ -43,7 +42,7 @@ public class OfferController {
 
     @PostMapping("/update")
     public String updateOffers(@Valid @RequestBody OfferDTO offerDTO, Model model){
-        offerService.save(offerDTO);
+        offerService.add(offerDTO);
         return "redirect:/main";
     }
 }

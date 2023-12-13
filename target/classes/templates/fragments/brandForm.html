@@ -1,0 +1,14 @@
+<objectForm>
+    <form th:action="@{/brands/add}"
+          th:method="post"
+          th:object="${brandDTO}"
+          class="w-75">
+        <input type="hidden" th:field="${brandDTO.id}" />
+        <div class="mb-3 text-center">
+            <label for="name" class="form-label">Name</label>
+            <input th:field="${brandDTO.name}" th:errorclass="is-invalid" type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+            <small th:if="${#fields.hasErrors('name')}" th:errors="${brandDTO.name}" class="text-danger">Error message</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Brand</button>
+    </form>
+</objectForm>

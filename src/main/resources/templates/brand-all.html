@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/head}"><title>Brands</title></head>
+    <body>
+        <style>
+            .selectArea {
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 10px;
+            }
+            select {
+                padding: 5px 10px;
+                background: white;
+                border: 1px solid teal;
+            }
+        </style>
+        <div th:replace="fragments/header">Navbar</div>
+        <div class="container mt-3">
+            <h1>Car Brands</h1>
+            <div class="row">
+                <div class="col-md-8"> <!-- Указываем больший размер колонки -->
+                    <div class="selectArea">
+                        <label for="selectSort"></label>
+                        <select id="selectSort">
+                            <option value=""></option>
+                            <option>
+                                <a th:href="@{/check/if/it/exist}" class="btn btn-primary btn-sm">
+                                    By popularity
+                                </a>
+                            </option>
+                            <option>If</option>
+                            <option>It</option>
+                            <option>Exist</option>
+                        </select>
+                    </div>
+
+                    <div class="list-group"> <!-- Используем класс list-group для отображения в виде списка -->
+                        <a th:each="brand : ${brands}" th:href="@{/models/getAll/{brandId}(brandId=${brand.id})}" class="list-group-item list-group-item-action">
+                            <h5 th:text="${brand.name}" class="mb-1"></h5> <!-- Используем класс mb-1 для отступа между элементами списка -->
+        <!--                    <a th:href="@{/models/getAll/{brandId}(brandId=${brand.id})}" class="btn btn-primary btn-sm">About</a> &lt;!&ndash; Используем класс btn-sm для меньшего размера кнопки &ndash;&gt;-->
+        <!--                    <a th:href="@{/brands/update/{brandId}(brandId=${brand.id})}" class="btn btn-primary btn-sm">Update</a>-->
+        <!--                    <a th:href="@{/brands/delete/{brandId}(brandId=${brand.id})}" class="btn btn-primary btn-sm">Delete</a>-->
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4"> <!-- Добавляем новую колонку для кнопки 'Add new Brand' -->
+<!--                    <a th:href="@{/brands/add}" class="btn btn-primary d-block mt-3">New Brand</a> &lt;!&ndash; Используем класс d-block и mt-3 для размещения кнопки сбоку &ndash;&gt;-->
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            console.log(document.querySelector('#selectSort'));
+            document.querySelector('#selectSort').addEventListener('change', () => {
+                fetch('/brands/getAll')
+            })
+        </script>
+        <!--<footer th:replace="~{fragments/footer}"></footer>-->
+    </body>
+</html>

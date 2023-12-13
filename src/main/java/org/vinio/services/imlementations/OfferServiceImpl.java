@@ -2,19 +2,16 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.vinio.dtos.BrandDTO;
 import org.vinio.dtos.OfferDTO;
-import org.vinio.models.Brand;
 import org.vinio.models.Offer;
-import org.vinio.repositories.ModelRepository;
 import org.vinio.repositories.OfferRepository;
-import org.vinio.repositories.UserRepository;
 import org.vinio.services.OfferService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,20 +25,20 @@ public class OfferServiceImpl implements OfferService<String> {
     }
 
     @Override
-    public void save(OfferDTO offerDTO) {
+    public void add(OfferDTO offerDTO) {
         try {offerRepository.save(modelMapper.map(offerDTO, Offer.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
 
     @Override
-    public OfferDTO saveAndGetId(OfferDTO offerDTO) {
+    public OfferDTO addOffer(OfferDTO offerDTO) {
         try {return modelMapper.map(offerRepository.save(modelMapper.map(offerDTO, Offer.class)), OfferDTO.class);}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
 
     // todo referenceById
     @Override
-    public OfferDTO get(String uuid) {
+    public OfferDTO getOffer(String uuid) {
         try {
             return modelMapper.map(offerRepository.findById(uuid), OfferDTO.class);
         }catch (Exception e) {
@@ -50,7 +47,8 @@ public class OfferServiceImpl implements OfferService<String> {
     }
 
     @Override
-    public List<OfferDTO> getAll() {
+    @Cacheable("offers")
+    public List<OfferDTO> getAllOffers() {
         List<Offer> list = offerRepository.findAll();
         return list.stream()
                 .map(e->modelMapper.map(e, OfferDTO.class))
@@ -58,11 +56,13 @@ public class OfferServiceImpl implements OfferService<String> {
     }
 
     @Override
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public void update(OfferDTO offerDTO) {
-        save(offerDTO);
+        add(offerDTO);
     }
 
     @Override
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public void delete(String uuid) {
         offerRepository.deleteById(uuid);
     }

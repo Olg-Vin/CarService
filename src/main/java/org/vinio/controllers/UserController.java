@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.vinio.dtos.BrandDTO;
 import org.vinio.dtos.UserDTO;
 import org.vinio.services.imlementations.UserServiceImpl;
 
@@ -21,13 +20,13 @@ public class UserController {
 
     @GetMapping("/get/{id}")
     public String getUser(@PathVariable String id, Model model) {
-        model.addAttribute("user",userService.get(id));
-        return "user";
+        model.addAttribute("users",userService.get(id));
+        return "user-all";
     }
     @GetMapping("/getAll")
     public String getAllBrands(Model model){
-        model.addAttribute("user",userService.getAll());
-        return "user";
+        model.addAttribute("users",userService.getAllUsers());
+        return "user-all";
     }
 
     @PostMapping("/add")
