@@ -1,6 +1,7 @@
 package org.vinio.services;
 
 import org.vinio.dtos.ModelDTO;
+import org.vinio.models.enums.Category;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ public interface ModelService<ID> {
     List<ModelDTO> getAllModels();
     void updateModel(ModelDTO modelDTO);
     void removeModel(ID id);
+    List<ModelDTO> getModelsByBrandId(ID id);
+    List<ModelDTO> getModelsByCategory(Category category);
 }

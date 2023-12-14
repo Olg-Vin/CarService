@@ -19,28 +19,32 @@
             <h1>Car Brands</h1>
             <div class="row">
                 <div class="col-md-8"> <!-- Указываем больший размер колонки -->
-                    <div class="selectArea">
-                        <label for="selectSort"></label>
-                        <select id="selectSort">
-                            <option value=""></option>
-                            <option>
-                                <a th:href="@{/check/if/it/exist}" class="btn btn-primary btn-sm">
-                                    By popularity
-                                </a>
-                            </option>
-                            <option>If</option>
-                            <option>It</option>
-                            <option>Exist</option>
-                        </select>
-                    </div>
+<!--                    <div class="selectArea">-->
+<!--                        <label for="selectSort"></label>-->
+<!--                        <select id="selectSort">-->
+<!--                            <option value=""></option>-->
+<!--                            <option>-->
+<!--                                <a th:href="@{/check/if/it/exist}" class="btn btn-primary btn-sm">-->
+<!--                                    By popularity-->
+<!--                                </a>-->
+<!--                            </option>-->
+<!--                            <option>If</option>-->
+<!--                            <option>It</option>-->
+<!--                            <option>Exist</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
 
-                    <div class="list-group"> <!-- Используем класс list-group для отображения в виде списка -->
-                        <a th:each="brand : ${brands}" th:href="@{/models/getAll/{brandId}(brandId=${brand.id})}" class="list-group-item list-group-item-action">
-                            <h5 th:text="${brand.name}" class="mb-1"></h5> <!-- Используем класс mb-1 для отступа между элементами списка -->
-        <!--                    <a th:href="@{/models/getAll/{brandId}(brandId=${brand.id})}" class="btn btn-primary btn-sm">About</a> &lt;!&ndash; Используем класс btn-sm для меньшего размера кнопки &ndash;&gt;-->
-        <!--                    <a th:href="@{/brands/update/{brandId}(brandId=${brand.id})}" class="btn btn-primary btn-sm">Update</a>-->
-        <!--                    <a th:href="@{/brands/delete/{brandId}(brandId=${brand.id})}" class="btn btn-primary btn-sm">Delete</a>-->
-                        </a>
+                    <div class="col-md-15"> <!-- Указываем больший размер колонки -->
+                        <div class="list-group list-group-flush border-bottom scrollarea">
+                            <!-- Используем класс list-group для отображения в виде списка -->
+                            <a th:each="brand : ${brands}" th:href="@{/models/getModelsByBrand/{id}(id=${brand.id})}"
+                               class="list-group-item list-group-item-action py-3 lh-sm">
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <h5 th:text="${brand.name}" class="mb-1"></h5>
+                                    <!-- Используем класс mb-1 для отступа между элементами списка -->
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4"> <!-- Добавляем новую колонку для кнопки 'Add new Brand' -->

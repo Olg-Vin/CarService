@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface UserService<ID> {
 //    crud
-    void save(UserDTO userDTO);
-    UserDTO saveAndGetId(UserDTO userDTO);
+    void add(UserDTO userDTO);
+    UserDTO addUser(UserDTO userDTO);
     UserDTO get(ID id);
     List<UserDTO> getAllUsers();
     void updateUser(UserDTO user);

@@ -8,6 +8,7 @@ import org.vinio.models.enums.Category;
 import org.vinio.models.enums.Role;
 import org.vinio.services.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class DataInitializer implements CommandLineRunner {
             userRoleDTO.setRole(Role.valueOf("User"));
             userDTO.setRole(userRoleDTO);
             userDTO.setUsername(s);
-            list.add(userService.saveAndGetId(userDTO));
+            list.add(userService.addUser(userDTO));
         }
         return list;
     }
@@ -107,6 +108,7 @@ public class DataInitializer implements CommandLineRunner {
             offerDTO.setDescription(s);
             offerDTO.setModel(modelDTOList.get(i));
             offerDTO.setSeller(userDTOList.get(i));
+            offerDTO.setPrice(BigDecimal.valueOf(Math.round(Math.random()*1000000),2));
             i++;
             list.add(offerService.addOffer(offerDTO));
         }

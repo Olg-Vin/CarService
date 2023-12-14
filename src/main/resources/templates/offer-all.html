@@ -2,22 +2,17 @@
 <html lang="en">
 <head th:replace="~{fragments/head}"><title>Models</title></head>
 <body>
-<div th:replace="fragments/header">Navbar</div>
+<div th:replace="~{fragments/header}">Navbar</div>
 <div class="container mt-3">
     <h1>Offers</h1>
     <div class="row">
-        <div class="col-md-8"> <!-- Указываем больший размер колонки -->
-            <div class="list-group"> <!-- Используем класс list-group для отображения в виде списка -->
-                <a th:each="offer : ${offers}" th:href="@{/offers/getAll}" class="list-group-item list-group-item-action">
-                    <h5 th:text="${offer.description}" class="mb-1"></h5> <!-- Используем класс mb-1 для отступа между элементами списка -->
-                    <h5 th:text="${offer.price}" class="mb-1"></h5>
-                    <h5 th:text="${offer.year}" class="mb-1"></h5>
-                    <h5 th:text="${offer.imageUrl}" class="mb-1"></h5>
-                    <h5 th:text="${offer.engine}" class="mb-1"></h5>
-                    <h5 th:text="${offer.transmission}" class="mb-1"></h5>
-                    <h5 th:text="${offer.mileage}" class="mb-1"></h5>
-                    <h5 th:text="${offer.seller.username}" class="mb-1"></h5>
-                    <h5 th:text="${offer.model.name}" class="mb-1"></h5>
+        <div class="col-md-15"> <!-- Указываем больший размер колонки -->
+            <div class="list-group list-group-flush border-bottom scrollarea"> <!-- Используем класс list-group для отображения в виде списка -->
+                <a th:each="offer : ${offers}" th:href="@{/offers/get/{id}(id=${offer.id})}"
+                   class="list-group-item list-group-item-action py-3 lh-sm">
+                    <img src="/images/img.jpg" alt="Offer Image">
+                    <h5 th:text="'Name: '+${offer.description}" class="mb-1"></h5> <!-- Используем класс mb-1 для отступа между элементами списка -->
+                    <h5 th:text="'Category: '+${offer.price}" class="mb-1"></h5>
                     <!--                    <a th:href="@{/models/getAll/{brandId}(brandId=${brand.id})}" class="btn btn-primary btn-sm">About</a> &lt;!&ndash; Используем класс btn-sm для меньшего размера кнопки &ndash;&gt;-->
 <!--                    <a th:href="@{/offers/update/{id}(id=${offer.id})}" class="btn btn-primary btn-sm">Update</a>-->
 <!--                    <a th:href="@{/offers/delete/{id}(id=${offer.id})}" class="btn btn-primary btn-sm">Delete</a>-->
@@ -25,7 +20,7 @@
             </div>
         </div>
         <div class="col-md-4"> <!-- Добавляем новую колонку для кнопки 'Add new Brand' -->
-            <a th:href="@{/offers/add}" class="btn btn-primary d-block mt-3">New Offer</a> <!-- Используем класс d-block и mt-3 для размещения кнопки сбоку -->
+<!--            <a th:href="@{/offers/add}" class="btn btn-primary d-block mt-3">New Offer</a> &lt;!&ndash; Используем класс d-block и mt-3 для размещения кнопки сбоку &ndash;&gt;-->
         </div>
     </div>
 </div>

@@ -26,12 +26,14 @@ public class BrandServiceImpl implements BrandService<String > {
         this.modelMapper = modelMapper;
     }
     @Override
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public void add(BrandDTO brandDTO) {
         try {brandRepository.saveAndFlush(modelMapper.map(brandDTO, Brand.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
 
     @Override
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public BrandDTO addBrand(BrandDTO brandDTO) {
         try {
             return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brandDTO, Brand.class)), BrandDTO.class);
