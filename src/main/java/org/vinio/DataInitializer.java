@@ -60,7 +60,7 @@ public class DataInitializer implements CommandLineRunner {
         return list;
     }
     private void addManyBrands(){
-        for (int i = 0; i < 1000; i++){
+        for (int i = 0; i < 30_000; i++){
             BrandDTO brandDTO = new BrandDTO();
             brandDTO.setName("car" + i);
             brandService.addBrand(brandDTO);

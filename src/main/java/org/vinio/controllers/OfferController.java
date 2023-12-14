@@ -36,7 +36,7 @@ public class OfferController {
 
     @GetMapping("/delete/{id}")
     public String deleteOffers(@PathVariable String id, Model model){
-        offerService.delete(id);
+        offerService.removeOffer(id);
         return "redirect:/main";
     }
 

@@ -2,6 +2,7 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -61,12 +62,14 @@ public class UserServiceImpl implements UserService<String> {
     }
 
     @Override
-    public void update(UserDTO userDTO) {
+    @CacheEvict(cacheNames = "users", allEntries = true)
+    public void updateUser(UserDTO userDTO) {
         save(userDTO);
     }
 
     @Override
-    public void delete(String uuid) {
+    @CacheEvict(cacheNames = "users", allEntries = true)
+    public void removeUser(String uuid) {
         userRepository.deleteById(uuid);
     }
 

@@ -10,6 +10,6 @@ public interface UserService<ID> {
     UserDTO saveAndGetId(UserDTO userDTO);
     UserDTO get(ID id);
     List<UserDTO> getAllUsers();
-    void update(UserDTO user);
-    void delete(ID id);
+    void updateUser(UserDTO user);
+    void removeUser(ID id);
 }

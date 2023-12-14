@@ -57,13 +57,13 @@ public class OfferServiceImpl implements OfferService<String> {
 
     @Override
     @CacheEvict(cacheNames = "offers", allEntries = true)
-    public void update(OfferDTO offerDTO) {
+    public void updateOffer(OfferDTO offerDTO) {
         add(offerDTO);
     }
 
     @Override
     @CacheEvict(cacheNames = "offers", allEntries = true)
-    public void delete(String uuid) {
+    public void removeOffer(String uuid) {
         offerRepository.deleteById(uuid);
     }
 

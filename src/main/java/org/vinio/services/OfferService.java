@@ -10,7 +10,7 @@ public interface OfferService<ID> {
     OfferDTO addOffer(OfferDTO offerDTO);
     OfferDTO getOffer(ID id);
     List<OfferDTO> getAllOffers();
-    void update(OfferDTO offerDTO);
-    void delete(ID id);
+    void updateOffer(OfferDTO offerDTO);
+    void removeOffer(ID id);
 
 }
