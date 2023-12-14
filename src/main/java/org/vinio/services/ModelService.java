@@ -1,14 +1,17 @@
 package org.vinio.services;
 
 import org.vinio.dtos.ModelDTO;
+import org.vinio.models.enums.Category;
 
-import java.util.UUID;
+import java.util.List;
 
 public interface ModelService<ID> {
-//    crud
-    void save(ModelDTO modelDTO);
-    ModelDTO saveAndGetId(ModelDTO modelDTO);
-    ModelDTO get(ID id);
-    void update(ModelDTO modelDTO);
-    void delete(ID id);
+    void add(ModelDTO modelDTO);
+    ModelDTO addModel(ModelDTO modelDTO);
+    ModelDTO getModel(ID id);
+    List<ModelDTO> getAllModels();
+    void updateModel(ModelDTO modelDTO);
+    void removeModel(ID id);
+    List<ModelDTO> getModelsByBrandId(ID id);
+    List<ModelDTO> getModelsByCategory(Category category);
 }

@@ -1,0 +1,35 @@
+<objectForm>
+    <form th:action="@{/models/add}"
+          th:method="post"
+          th:object="${modelDTO}"
+          class="w-75">
+        <input type="hidden" th:field="${modelDTO.id}" />
+        <div class="mb-3 text-center">
+            <label for="name" class="form-label">Name</label>
+            <input th:field="${modelDTO.name}" th:errorclass="is-invalid" type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+            <small th:if="${#fields.hasErrors('name')}" th:errors="${modelDTO.name}" class="text-danger">Error message</small>
+        </div>
+        <div class="mb-3 text-center">
+            <label for="category" class="form-label">Category</label>
+            <select th:field="${modelDTO.category}" class="form-control" id="category" name="category">
+                <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}">Category</option>
+            </select>
+        </div>
+        <div class="mb-3 text-center">
+            <label for="imageUrl" class="form-label">Image URL</label>
+            <input th:field="${modelDTO.imageUrl}" th:errorclass="is-invalid" type="text" class="form-control" id="imageUrl" name="imageUrl" placeholder="Enter image URL">
+            <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="${modelDTO.imageUrl}" class="text-danger">Error message</small>
+        </div>
+        <div class="mb-3 text-center">
+            <label for="startYear" class="form-label">Start Year</label>
+            <input th:field="${modelDTO.startYear}" th:errorclass="is-invalid" type="text" class="form-control" id="startYear" name="startYear" placeholder="Enter start Year">
+            <small th:if="${#fields.hasErrors('startYear')}" th:errors="${modelDTO.startYear}" class="text-danger">Error message</small>
+        </div>
+        <div class="mb-3 text-center">
+            <label for="endYear" class="form-label">End Year</label>
+            <input th:field="${modelDTO.endYear}" th:errorclass="is-invalid" type="text" class="form-control" id="endYear" name="endYear" placeholder="Enter end Year">
+            <small th:if="${#fields.hasErrors('endYear')}" th:errors="${modelDTO.endYear}" class="text-danger">Error message</small>
+        </div>
+        <button type="submit" class="btn btn-primary d-block mx-auto">Add Model</button>
+    </form>
+</objectForm>

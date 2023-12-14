@@ -2,19 +2,21 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.vinio.dtos.OfferDTO;
 import org.vinio.dtos.UserDTO;
-import org.vinio.models.Model;
 import org.vinio.models.User;
 import org.vinio.repositories.UserRepository;
-import org.vinio.repositories.UserRoleRepository;
 import org.vinio.services.UserService;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class UserServiceImpl implements UserService<String> {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
@@ -26,13 +28,15 @@ public class UserServiceImpl implements UserService<String> {
     }
 
     @Override
-    public void save(UserDTO userDTO) {
+    @CacheEvict(cacheNames = "users", allEntries = true)
+    public void add(UserDTO userDTO) {
         try {userRepository.save(modelMapper.map(userDTO, User.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения " + e.getMessage());}
     }
 
     @Override
-    public UserDTO saveAndGetId(UserDTO userDTO) {
+    @CacheEvict(cacheNames = "users", allEntries = true)
+    public UserDTO addUser(UserDTO userDTO) {
         try {return modelMapper.map(userRepository.save(modelMapper.map(userDTO, User.class)), UserDTO.class);}
         catch (DataAccessException e){System.out.println("Ошибка сохранения " + e.getMessage());return null;}
     }
@@ -47,12 +51,23 @@ public class UserServiceImpl implements UserService<String> {
     }
 
     @Override
-    public void update(UserDTO userDTO) {
-        save(userDTO);
+    @Cacheable("users")
+    public List<UserDTO> getAllUsers() {
+        List<User> list = userRepository.findAll();
+        return list.stream()
+                .map(e->modelMapper.map(e, UserDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(String uuid) {
+    @CacheEvict(cacheNames = "users", allEntries = true)
+    public void updateUser(UserDTO userDTO) {
+        add(userDTO);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "users", allEntries = true)
+    public void removeUser(String uuid) {
         userRepository.deleteById(uuid);
     }
 

@@ -45,6 +45,7 @@ public class User extends BaseEntityCM{
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     @JoinColumn(name = "role_id")
+    @Enumerated(EnumType.STRING)
     public UserRole getRole() {
         return role;
     }

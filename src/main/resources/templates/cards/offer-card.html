@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head}"><title>Brands</title></head>
+<body>
+<div th:replace="~{fragments/header}" class="navbar navbar-expand-lg navbar-light bg-light">Navbar</div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card" >
+                <img src="/images/img.jpg" class="card-img-top" alt="Товар">
+                <div class="card-body">
+                    <p class="card-text">
+                        Описание.
+                    <ul>
+                        <li th:text="'description: ' + ${offer.description}"></li>
+                        <li th:text="'model: ' + ${offer.model.name}"></li>
+                        <li th:text="'seller: ' + ${offer.seller}"></li>
+                        <li th:text="'mileage: ' + ${offer.mileage}"></li>
+                        <li th:text="'transmission: ' + ${offer.transmission}"></li>
+                        <li th:text="'engine: ' + ${offer.engine}"></li>
+                        <li th:text="'year: ' + ${offer.year}"></li>
+                        <li th:text="'price: ' + ${offer.price}"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

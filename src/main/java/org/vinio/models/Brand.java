@@ -6,7 +6,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
-import org.springframework.stereotype.Service;
 
 import java.util.Set;
 

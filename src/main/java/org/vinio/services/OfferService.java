@@ -2,14 +2,18 @@ package org.vinio.services;
 
 import org.vinio.dtos.OfferDTO;
 
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface OfferService<ID> {
 //    crud
-    void save(OfferDTO offerDTO);
-    OfferDTO saveAndGetId(OfferDTO offerDTO);
-    OfferDTO get(ID id);
-    void update(OfferDTO offerDTO);
-    void delete(ID id);
-
+    void add(OfferDTO offerDTO);
+    OfferDTO addOffer(OfferDTO offerDTO);
+    OfferDTO getOffer(ID id);
+    List<OfferDTO> getAllOffers();
+    void updateOffer(OfferDTO offerDTO);
+    void removeOffer(ID id);
+    List<OfferDTO> getOfferSortedByPrice();
+    BigDecimal getMidlPrice();
+    List<OfferDTO> findOfferByModelId(String id);
 }

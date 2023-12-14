@@ -3,18 +3,16 @@ package org.vinio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.vinio.dtos.*;
 import org.vinio.models.enums.Category;
 import org.vinio.models.enums.Role;
 import org.vinio.services.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -37,6 +35,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+//        addManyBrands();
         List<BrandDTO> brandDTOS = addBrands();
         System.out.println();
         System.out.println(brandDTOS.get(0).toString());
@@ -56,10 +55,17 @@ public class DataInitializer implements CommandLineRunner {
         for (String s:names){
             BrandDTO brandDTO = new BrandDTO();
             brandDTO.setName(s);
-            list.add(brandService.saveAndGetId(brandDTO));
+            list.add(brandService.addBrand(brandDTO));
 //            list.add(brandDTO);
         }
         return list;
+    }
+    private void addManyBrands(){
+        for (int i = 0; i < 30_000; i++){
+            BrandDTO brandDTO = new BrandDTO();
+            brandDTO.setName("car" + i);
+            brandService.addBrand(brandDTO);
+        }
     }
     private List<ModelDTO> addModels(List<BrandDTO> brandDTOS){
         List<ModelDTO> list = new ArrayList<>();
@@ -74,7 +80,7 @@ public class DataInitializer implements CommandLineRunner {
             int randomNumber = random.nextInt(5) + 1;
             modelDTO.setBrand(brandDTOS.get(--randomNumber));
             modelDTO.setStartYear(LocalDate.now().getYear());
-            list.add(modelService.saveAndGetId(modelDTO));
+            list.add(modelService.addModel(modelDTO));
         }
         return list;
     }
@@ -89,7 +95,7 @@ public class DataInitializer implements CommandLineRunner {
             userRoleDTO.setRole(Role.valueOf("User"));
             userDTO.setRole(userRoleDTO);
             userDTO.setUsername(s);
-            list.add(userService.saveAndGetId(userDTO));
+            list.add(userService.addUser(userDTO));
         }
         return list;
     }
@@ -102,8 +108,9 @@ public class DataInitializer implements CommandLineRunner {
             offerDTO.setDescription(s);
             offerDTO.setModel(modelDTOList.get(i));
             offerDTO.setSeller(userDTOList.get(i));
+            offerDTO.setPrice(BigDecimal.valueOf(Math.round(Math.random()*1000000),2));
             i++;
-            list.add(offerService.saveAndGetId(offerDTO));
+            list.add(offerService.addOffer(offerDTO));
         }
         return list;
     }

@@ -2,6 +2,9 @@ package org.vinio.services.imlementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.vinio.dtos.BrandDTO;
@@ -9,11 +12,12 @@ import org.vinio.models.Brand;
 import org.vinio.repositories.BrandRepository;
 import org.vinio.services.BrandService;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class BrandServiceImpl implements BrandService<String > {
-    @Autowired
     private final BrandRepository brandRepository;
     private final ModelMapper modelMapper;
     @Autowired
@@ -22,32 +26,45 @@ public class BrandServiceImpl implements BrandService<String > {
         this.modelMapper = modelMapper;
     }
     @Override
-    public void save(BrandDTO brandDTO) {
-        try {brandRepository.save(modelMapper.map(brandDTO, Brand.class));}
+    @CacheEvict(cacheNames = "brands", allEntries = true)
+    public void add(BrandDTO brandDTO) {
+        try {brandRepository.saveAndFlush(modelMapper.map(brandDTO, Brand.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
 
     @Override
-    public BrandDTO saveAndGetId(BrandDTO brandDTO) {
+    @CacheEvict(cacheNames = "brands", allEntries = true)
+    public BrandDTO addBrand(BrandDTO brandDTO) {
         try {
-            return modelMapper.map(brandRepository.save(modelMapper.map(brandDTO, Brand.class)), BrandDTO.class);
+            return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brandDTO, Brand.class)), BrandDTO.class);
         }
         catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
 
     @Override
-    public BrandDTO get(String uuid) {
+    public BrandDTO getBrand(String uuid) {
         try {return modelMapper.map(brandRepository.findById(uuid), BrandDTO.class);}
         catch (Exception e){
             throw new IllegalArgumentException("Объекта brand с id " + uuid + " не существует");
         }
     }
 
+    @Override
+    @Cacheable("brands")
+    public List<BrandDTO> getAllBrands() {
+        List<Brand> list = brandRepository.findAll();
+        return list.stream()
+                .map(e->modelMapper.map(e,BrandDTO.class))
+                .collect(Collectors.toList());
+    }
 
     @Override
-    public void update(BrandDTO brandDTO) {save(brandDTO);}
+    @CacheEvict(cacheNames = "brands", allEntries = true)
+    public void updateBrand(BrandDTO brandDTO) {
+        add(brandDTO);}
     @Override
-    public void delete(String uuid) {
+    @CacheEvict(cacheNames = "brands", allEntries = true)
+    public void removeBrand(String uuid) {
         brandRepository.deleteById(uuid);
     }
 }

@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Model page</title>
 </head>
 <body>
-
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Start Year</th>
+            <th>End Year</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="m : ${model}">
+            <td th:text="${m.id}"></td>
+            <td th:text="${m.name}"></td>
+            <td th:text="${m.Category}"></td>
+            <td th:text="${m.startYear}"></td>
+            <td th:text="${m.EndYear}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

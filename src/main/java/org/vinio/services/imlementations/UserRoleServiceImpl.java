@@ -9,8 +9,6 @@ import org.vinio.models.UserRole;
 import org.vinio.repositories.UserRoleRepository;
 import org.vinio.services.UserRoleService;
 
-import java.util.UUID;
-
 @Service
 public class UserRoleServiceImpl implements UserRoleService<String> {
     private UserRoleRepository userRoleRepository;
@@ -23,13 +21,13 @@ public class UserRoleServiceImpl implements UserRoleService<String> {
     }
 
     @Override
-    public void save(UserRoleDTO userRoleDTO) {
+    public void add(UserRoleDTO userRoleDTO) {
         try {userRoleRepository.save(modelMapper.map(userRoleDTO, UserRole.class));}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");}
     }
 
     @Override
-    public String saveAndGetId(UserRoleDTO userRoleDTO) {
+    public String addUserRole(UserRoleDTO userRoleDTO) {
         try {return userRoleRepository.save(modelMapper.map(userRoleDTO, UserRole.class)).getId();}
         catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
@@ -43,12 +41,12 @@ public class UserRoleServiceImpl implements UserRoleService<String> {
     }
 
     @Override
-    public void update(UserRoleDTO userRoleDTO) {
-        save(userRoleDTO);
+    public void updateUserRole(UserRoleDTO userRoleDTO) {
+        add(userRoleDTO);
     }
 
     @Override
-    public void delete(String uuid) {
+    public void removeUserRole(String uuid) {
         userRoleRepository.deleteById(uuid);
     }
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head}"><title>Models</title></head>
+<body>
+<div th:replace="~{fragments/header}">Navbar</div>
+<div class="container mt-3">
+    <h1>Car Models</h1>
+    <div class="row">
+        <div class="col-md-8"> <!-- Указываем больший размер колонки -->
+            <div class="list-group list-group-flush border-bottom scrollarea"> <!-- Используем класс list-group для отображения в виде списка -->
+                <a th:each="model : ${models}" th:href="@{/models/get/{id}(id=${model.id})}"
+                   class="list-group-item list-group-item-action py-3 lh-sm">
+                    <img src="/images/img.jpg" alt="Model Image">
+                    <h5 th:text="'Name: '+${model.name}" class="mb-1"></h5> <!-- Используем класс mb-1 для отступа между элементами списка -->
+                    <h5 th:text="'Category: '+${model.category}" class="mb-1"></h5>
+                    <!--                    <a th:href="@{/models/update/{id}(id=${model.id})}" class="btn btn-primary btn-sm">Update</a>-->
+                    <!--                    <a th:href="@{/models/delete/{id}(id=${model.id})}" class="btn btn-primary btn-sm">Delete</a>-->
+                </a>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <p>Brands</p>
+            <div class="list-group">
+                <a th:href="@{/models/getAll}"
+                   class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">All</h5>
+                </a>
+                <a th:each="brand : ${brands}" th:href="@{/models/getModelsByBrand/{id}(id=${brand.id})}"
+                   class="list-group-item list-group-item-action">
+                    <h5 th:text="${brand.name}" class="mb-1"></h5>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <p>Categories</p>
+            <div class="list-group">
+                <a th:href="@{/models/getAll}"
+                   class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">All</h5>
+                </a>
+                <a th:each="category : ${category}"
+                   th:href="@{/models/getModelsByCategory/{category}(category=${category})}"
+                   class="list-group-item list-group-item-action">
+                    <h5 th:text="${category}" class="mb-1"></h5>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<footer th:replace="~{fragments/footer}"></footer>-->
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+</div>
+</body>
+</html>
