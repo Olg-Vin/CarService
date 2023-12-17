@@ -54,7 +54,9 @@ public class OfferController {
         return new OfferDTO();
     }
     @PostMapping("/add")
-    public String addOffers(@Valid OfferDTO offerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String addOffers(@Valid OfferDTO offerDTO,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes){
         LOG.log(Level.INFO, "*principal* tried to add new offer");
         if (bindingResult.hasErrors()) {
             LOG.log(Level.INFO, "*principal* has unsuccessful attempt to add offer");

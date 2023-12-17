@@ -27,4 +27,16 @@ public class MainPageController {
         model.addAttribute("offers",offerService.getOfferSortedByPrice());
         return "home";
     }
+    @GetMapping("/login")
+    public String loginPage(Model model){
+        LOG.log(Level.INFO, "open login-page");
+        model.addAttribute("object", "login");
+        return "auth";
+    }
+    @GetMapping("/register")
+    public String registerPage(Model model){
+        LOG.log(Level.INFO, "open register-page");
+        model.addAttribute("object", "register");
+        return "auth";
+    }
 }

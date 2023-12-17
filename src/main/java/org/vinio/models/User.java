@@ -2,6 +2,7 @@ package org.vinio.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Setter
+@NoArgsConstructor
 @Table(name = "users")
 public class User extends BaseEntityCM{
     private String username;
@@ -21,6 +23,13 @@ public class User extends BaseEntityCM{
     private UserRole role;
     private String imageUrl;
     private List<Offer> offers;
+
+    public User(String username, String password, String firstName, String lastName) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     @Column(name = "username", length = 255, nullable = false, unique = true)
     public String getUsername() {
