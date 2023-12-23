@@ -38,6 +38,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        addAdmin();
 //        addManyBrands();
         List<BrandDTO> brandDTOS = addBrands();
         System.out.println();
@@ -64,7 +65,7 @@ public class DataInitializer implements CommandLineRunner {
         return list;
     }
     private void addManyBrands(){
-        for (int i = 0; i < 30_000; i++){
+        for (int i = 0; i < 10_000; i++){
             BrandDTO brandDTO = new BrandDTO();
             brandDTO.setName("car" + i);
             brandService.addBrand(brandDTO);
@@ -117,5 +118,15 @@ public class DataInitializer implements CommandLineRunner {
             list.add(offerService.addOffer(offerDTO));
         }
         return list;
+    }
+    private void addAdmin(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setActive(true);
+        UserRoleDTO userRoleDTO = new UserRoleDTO();
+        userRoleDTO.setRole(Role.valueOf("Admin"));
+        userDTO.setRole(userRoleDTO);
+        userDTO.setUsername("Admin");
+        userDTO.setPassword(passwordEncoder.encode("123456"));
+        userService.addUser(userDTO);
     }
 }

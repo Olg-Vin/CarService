@@ -13,33 +13,37 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.vinio.dtos.BrandDTO;
 import org.vinio.services.imlementations.BrandServiceImpl;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/brands")
 public class BrandController {
     private BrandServiceImpl brandService;
-    private static final Logger LOG = LogManager.getLogger(Controller.class);
+    private static final Logger LOG
+            = LogManager.getLogger(Controller.class);
     @Autowired
     public void setBrandService(BrandServiceImpl brandService) {
         this.brandService = brandService;
     }
-
     @GetMapping("/get/{id}")
-    public String getBrand(@PathVariable String id, Model model){
-        LOG.log(Level.INFO, "Show brand with id " + id + " for *principal*");
+    public String getBrand(@PathVariable String id, Model model, Principal principal){
+        LOG.log(Level.INFO, principal==null ?
+                "Show brand with id " + id :
+                "Show brand with id " + id + " for user with name " + principal.getName());
         model.addAttribute("brands",brandService.getBrand(id));
         return "brand-all";
     }
     @GetMapping("/getAll")
-    public String getAllBrands(Model model){
-        LOG.log(Level.INFO, "Show all brands for *principal*");
+    public String getAllBrands(Model model, Principal principal){
+        LOG.log(Level.INFO, principal == null ?
+                "Show all brands" : "User with name " +
+                principal.getName() + " get info for all brand");
         model.addAttribute("brands",brandService.getAllBrands());
         return "brand-all";
     }
-
-
     @GetMapping("/add")
-    public String addBrand(Model model){
-        LOG.log(Level.INFO, "*principal* call page-add for brand");
+    public String addBrand(Model model, Principal principal){
+        LOG.log(Level.INFO, principal.getName() + " call page-add for brand");
         model.addAttribute("object", "brand");
         return "page-add";
     }
@@ -48,24 +52,28 @@ public class BrandController {
         return new BrandDTO();
     }
     @PostMapping("/add")
-    public String addBrand(@Valid BrandDTO brandDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        LOG.log(Level.INFO, "*principal* tried to add new brand");
+    public String addBrand(@Valid BrandDTO brandDTO,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes,
+                           Principal principal){
+        LOG.log(Level.INFO, principal.getName() + " tried to add new brand");
         if (bindingResult.hasErrors()) {
-            LOG.log(Level.INFO, "*principal* has unsuccessful attempt to add brand");
+            LOG.log(Level.INFO, principal.getName() + " has unsuccessful attempt to add brand");
             redirectAttributes.addFlashAttribute("brandDTO", brandDTO);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.brandDTO",
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.brandDTO",
                     bindingResult);
             return "redirect:/brands/add";
         }
-        LOG.log(Level.INFO, "*principal* add new brand");
+        LOG.log(Level.INFO, principal.getName() + " add new brand");
         brandService.addBrand(brandDTO);
-        return "redirect:/main";
+        return "redirect:/brands/getAll";
     }
 
 
     @GetMapping("/delete/{id}")
-    public String deleteBrand(@PathVariable String id, Model model){
-        LOG.log(Level.INFO, "*principal* delete brand with id " + id);
+    public String deleteBrand(@PathVariable String id, Model model, Principal principal){
+        LOG.log(Level.INFO, principal.getName() + " delete brand with id " + id);
         brandService.removeBrand(id);
         return "redirect:/main";
     }

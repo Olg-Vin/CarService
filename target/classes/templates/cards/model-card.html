@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card" >
-                <img src="/images/img.jpg" class="card-img-top" alt="Товар">
+<!--                <img src="/pic/img.jpg" class="card-img-top" alt="Товар">-->
                 <div class="card-body">
                     <h5 class="card-title" th:text="'Name: ' + ${model.name}"></h5>
                     <p class="card-text">
@@ -31,7 +31,7 @@
                 </a>
                 <a th:each="offer : ${offers}" th:href="@{/offers/get/{id}(id=${offer.id})}"
                    class="list-group-item list-group-item-action">
-                    <img src="/images/img.jpg" alt="Offer Image">
+<!--                    <img src="/pic/img.jpg" alt="Offer Image">-->
                     <h5 th:text="'Description: ' + ${offer.description}" class="mb-1"></h5>
                     <!-- Используем класс mb-1 для отступа между элементами списка -->
                     <h5 th:text="'Price: ' + ${offer.price}" class="mb-1"></h5>

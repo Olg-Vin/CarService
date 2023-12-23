@@ -1,5 +1,6 @@
 package org.vinio.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.web.context.DelegatingSecurityContextReposit
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.vinio.models.enums.Role;
 import org.vinio.repositories.UserRepository;
 import org.vinio.services.imlementations.UserDetailsServiceImpl;
 
@@ -29,24 +31,27 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeRequests( // авторизация запроса - настройка правил доступа
                         authorizeRequests ->
-                                authorizeRequests
+                                authorizeRequests.
+                                        requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                         // запросы, доступные всем
-                                        .requestMatchers("/main", "/main/login", "/main/register",
+                                        .requestMatchers("/main", "/users/login", "/users/register",
                                                 "/brands/getAll", "/models/getAll", "/offers/getAll",
                                                 "/models/getModelsByCategory/{category}", "/models/getModelsByBrand/{id}",
-                                                "offers/getByModel/{id}").permitAll()
+                                                "offers/getByModel/{id}").permitAll().
+                                        requestMatchers("/users/profile", "/offers/add").hasRole(Role.User.name()).
+                                        requestMatchers("/models/add", "/brands/add").hasRole(Role.Admin.name())
                                         // запросы, доступные только авторизованным пользователям
                                         .anyRequest().authenticated()
                 )
                 .formLogin( // форма авторизации?
                         formLogin ->
-                                formLogin.loginPage("/main/login").
+                                formLogin.loginPage("/users/login").
                                         usernameParameter(UsernamePasswordAuthenticationFilter
                                                 .SPRING_SECURITY_FORM_USERNAME_KEY).
                                         passwordParameter(UsernamePasswordAuthenticationFilter
                                                 .SPRING_SECURITY_FORM_PASSWORD_KEY).
                                         defaultSuccessUrl("/main").
-                                        failureForwardUrl("/main")
+                                        failureForwardUrl("/users/login-error")
                 )
                 .logout((logout) ->
                         logout.logoutUrl("/users/logout"). // вызов выхода из системы

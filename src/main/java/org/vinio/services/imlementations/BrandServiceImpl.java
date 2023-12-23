@@ -36,11 +36,11 @@ public class BrandServiceImpl implements BrandService<String > {
     @CacheEvict(cacheNames = "brands", allEntries = true)
     public BrandDTO addBrand(BrandDTO brandDTO) {
         try {
-            return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brandDTO, Brand.class)), BrandDTO.class);
+            return modelMapper.map(brandRepository.saveAndFlush(
+                    modelMapper.map(brandDTO, Brand.class)), BrandDTO.class);
         }
         catch (DataAccessException e){System.out.println("Ошибка сохранения");return null;}
     }
-
     @Override
     public BrandDTO getBrand(String uuid) {
         try {return modelMapper.map(brandRepository.findById(uuid), BrandDTO.class);}
@@ -48,7 +48,6 @@ public class BrandServiceImpl implements BrandService<String > {
             throw new IllegalArgumentException("Объекта brand с id " + uuid + " не существует");
         }
     }
-
     @Override
     @Cacheable("brands")
     public List<BrandDTO> getAllBrands() {
@@ -57,7 +56,6 @@ public class BrandServiceImpl implements BrandService<String > {
                 .map(e->modelMapper.map(e,BrandDTO.class))
                 .collect(Collectors.toList());
     }
-
     @Override
     @CacheEvict(cacheNames = "brands", allEntries = true)
     public void updateBrand(BrandDTO brandDTO) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <head th:replace="~{fragments/head}"><title>Brands</title></head>
     <body>
         <style>
@@ -19,36 +19,26 @@
             <h1>Car Brands</h1>
             <div class="row">
                 <div class="col-md-8"> <!-- Указываем больший размер колонки -->
-<!--                    <div class="selectArea">-->
-<!--                        <label for="selectSort"></label>-->
-<!--                        <select id="selectSort">-->
-<!--                            <option value=""></option>-->
-<!--                            <option>-->
-<!--                                <a th:href="@{/check/if/it/exist}" class="btn btn-primary btn-sm">-->
-<!--                                    By popularity-->
-<!--                                </a>-->
-<!--                            </option>-->
-<!--                            <option>If</option>-->
-<!--                            <option>It</option>-->
-<!--                            <option>Exist</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-
                     <div class="col-md-15"> <!-- Указываем больший размер колонки -->
-                        <div class="list-group list-group-flush border-bottom scrollarea">
+                        <div th:each="brand : ${brands}" class="list-group list-group-flush border-bottom scrollarea">
                             <!-- Используем класс list-group для отображения в виде списка -->
-                            <a th:each="brand : ${brands}" th:href="@{/models/getModelsByBrand/{id}(id=${brand.id})}"
+                            <a th:href="@{/models/getModelsByBrand/{id}(id=${brand.id})}"
                                class="list-group-item list-group-item-action py-3 lh-sm">
                                 <div class="d-flex w-100 align-items-center justify-content-between">
                                     <h5 th:text="${brand.name}" class="mb-1"></h5>
                                     <!-- Используем класс mb-1 для отступа между элементами списка -->
                                 </div>
                             </a>
+                            <a th:href="@{/brands/delete/{id}(id=brand.id)}"
+                               class="btn btn-primary d-block mt-3"
+                               sec:authorize="hasRole('Admin')">Delete
+                            </a> <!-- Используем класс d-block и mt-3 для размещения кнопки сбоку -->
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4"> <!-- Добавляем новую колонку для кнопки 'Add new Brand' -->
-<!--                    <a th:href="@{/brands/add}" class="btn btn-primary d-block mt-3">New Brand</a> &lt;!&ndash; Используем класс d-block и mt-3 для размещения кнопки сбоку &ndash;&gt;-->
+                    <a th:href="@{/brands/add}"
+                       class="btn btn-primary d-block mt-3" sec:authorize="hasRole('Admin')">New Brand</a> <!-- Используем класс d-block и mt-3 для размещения кнопки сбоку -->
                 </div>
             </div>
         </div>

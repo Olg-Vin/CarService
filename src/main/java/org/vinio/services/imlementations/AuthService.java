@@ -3,8 +3,10 @@ package org.vinio.services.imlementations;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.vinio.dtos.UserDTO;
 import org.vinio.dtos.UserRegisterDTO;
 import org.vinio.models.User;
+import org.vinio.models.UserRole;
 import org.vinio.models.enums.Role;
 import org.vinio.repositories.UserRepository;
 import org.vinio.repositories.UserRoleRepository;
@@ -17,7 +19,6 @@ public class AuthService {
     private UserRepository userRepository;
 
     private UserRoleRepository userRoleRepository;
-
 
     private PasswordEncoder passwordEncoder;
 
@@ -32,13 +33,13 @@ public class AuthService {
             throw new RuntimeException("passwords.match");
         }
 
-        Optional<User> byEmail = this.userRepository.findByUsername(registrationDTO.getUsername());
+        Optional<User> byUsername = this.userRepository.findByUsername(registrationDTO.getUsername());
 
-        if (byEmail.isPresent()) {
-            throw new RuntimeException("email.used");
+        if (byUsername.isPresent()) {
+            throw new RuntimeException("username.used");
         }
 
-        var userRole = userRoleRepository.findRoleByRole(Role.User).orElseThrow();
+//        var userRole = userRoleRepository.findRoleByRole(Role.User).orElseThrow();
 
         User user = new User(
                 registrationDTO.getUsername(),
@@ -47,7 +48,9 @@ public class AuthService {
                 registrationDTO.getLastName()
         );
 
-        user.setRole(userRole);
+//        user.setRole(userRole);
+        user.setRole(new UserRole(Role.User));
+        user.setActive(true);
 
         this.userRepository.save(user);
     }

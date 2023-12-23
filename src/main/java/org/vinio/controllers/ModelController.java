@@ -16,6 +16,8 @@ import org.vinio.services.imlementations.BrandServiceImpl;
 import org.vinio.services.imlementations.ModelServiceImpl;
 import org.vinio.services.imlementations.OfferServiceImpl;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/models")
 public class ModelController {
@@ -41,8 +43,10 @@ public class ModelController {
         return "/cards/model-card";
     }
     @GetMapping("/getAll")
-    public String getAllModels(Model model){
-        LOG.log(Level.INFO, "*principal* get all models");
+    public String getAllModels(Model model, Principal principal){
+        LOG.log(Level.INFO, principal == null ?
+                "Show all models" : "User with name " +
+                principal.getName() + " get info for all models");
         model.addAttribute("models",modelService.getAllModels());
         model.addAttribute("brands", brandService.getAllBrands());
         model.addAttribute("category", Category.values());

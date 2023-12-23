@@ -2,11 +2,15 @@ package org.vinio.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Setter
+@Data
 @ToString
+@NoArgsConstructor
 public class UserRegisterDTO {
     private String username; // Проверка на уникальность
     private String password;
@@ -14,29 +18,29 @@ public class UserRegisterDTO {
     private String firstName;
     private String lastName;
 
-    @NotEmpty(message = "User name cannot be null or empty!")
-    @Size(min = 5, max = 20)
+//    @NotEmpty(message = "User name cannot be null or empty!")
+//    @Size(min = 2, max = 20)
     public String getUsername() {
         return username;
     }
-    @NotEmpty(message = "Password cannot be null or empty!")
-    @Size(min = 5, max = 20)
+//    @NotEmpty(message = "Password cannot be null or empty!")
+//    @Size(min = 2, max = 20)
     public String getPassword() {
         return password;
     }
-    @NotEmpty(message = "Repeat password cannot be null or empty!")
-    @Size(min = 5, max = 20)
+//    @NotEmpty(message = "Repeat password cannot be null or empty!")
+//    @Size(min = 2, max = 20)
     public String getRepeatPassword() {
         return repeatPassword;
     }
 
-    @NotEmpty(message = "First name cannot be null or empty!")
-    @Size(min = 5, max = 20)
+//    @NotEmpty(message = "First name cannot be null or empty!")
+//    @Size(min = 2, max = 20)
     public String getFirstName() {
         return firstName;
     }
-    @NotEmpty(message = "Last name cannot be null or empty!")
-    @Size(min = 5, max = 20)
+//    @NotEmpty(message = "Last name cannot be null or empty!")
+//    @Size(min = 2, max = 20)
     public String getLastName() {
         return lastName;
     }
