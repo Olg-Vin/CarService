@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.vinio.dtos.OfferDTO;
 import org.vinio.services.imlementations.OfferServiceImpl;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/offers")
 public class OfferController {
@@ -24,20 +26,22 @@ public class OfferController {
     }
 
     @GetMapping("/get/{id}")
-    public String getOffer(@PathVariable String id, Model model){
-        LOG.log(Level.INFO, "*principal* get offer with id " + id);
+    public String getOffer(@PathVariable String id, Model model, Principal principal){
+        LOG.log(Level.INFO, "User with " + principal.getName() +" get offer with id " + id);
         model.addAttribute("offer",offerService.getOffer(id));
         return "/cards/offer-card";
     }
     @GetMapping("/getByModel/{id}")
     public String findOfferByModelId(@PathVariable String id, Model model){
-        LOG.log(Level.INFO, "*principal* get offers for model with id " + id);
+        LOG.log(Level.INFO, "Get offers for model with id " + id);
         model.addAttribute("offers", offerService.findOfferByModelId(id));
         return "offer-all";
     }
     @GetMapping("/getAll")
-    public String getAllOffers(Model model){
-        LOG.log(Level.INFO, "*principal* get all offers");
+    public String getAllOffers(Model model, Principal principal){
+        LOG.log(Level.INFO, principal == null ?
+                "Show all offers" : "User with name " +
+                principal.getName() + " get info for all offers");
         model.addAttribute("offers",offerService.getAllOffers());
         return "offer-all";
     }
@@ -54,7 +58,9 @@ public class OfferController {
         return new OfferDTO();
     }
     @PostMapping("/add")
-    public String addOffers(@Valid OfferDTO offerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String addOffers(@Valid OfferDTO offerDTO,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes){
         LOG.log(Level.INFO, "*principal* tried to add new offer");
         if (bindingResult.hasErrors()) {
             LOG.log(Level.INFO, "*principal* has unsuccessful attempt to add offer");

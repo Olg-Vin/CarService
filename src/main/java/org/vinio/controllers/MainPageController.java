@@ -1,5 +1,6 @@
 package org.vinio.controllers;
 
+import jakarta.annotation.security.PermitAll;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,10 +22,17 @@ public class MainPageController {
     }
 
     private static final Logger LOG = LogManager.getLogger(Controller.class);
+    @PermitAll
     @GetMapping("")
     public String mainPage(Model model){
         LOG.log(Level.INFO, "open home-page");
         model.addAttribute("offers",offerService.getOfferSortedByPrice());
         return "home";
+    }
+    @GetMapping("/register")
+    public String registerPage(Model model){
+        LOG.log(Level.INFO, "open register-page");
+        model.addAttribute("object", "register");
+        return "registration";
     }
 }

@@ -6,9 +6,7 @@ import org.vinio.models.enums.Engine;
 import org.vinio.models.enums.Transmission;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.Year;
-import java.util.UUID;
 
 @Entity
 @Data

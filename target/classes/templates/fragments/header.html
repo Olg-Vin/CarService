@@ -1,21 +1,40 @@
-<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-<!--    <div class="col-md-3 mb-2 mb-md-0">-->
-<!--        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">-->
-<!--            <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>-->
-<!--        </a>-->
-<!--    </div>-->
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+        xmlns:sec="http://www.w3.org/1999/xhtml">
+    <!--    <div class="col-md-3 mb-2 mb-md-0">-->
+    <!--        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">-->
+    <!--            <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>-->
+    <!--        </a>-->
+    <!--    </div>-->
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/main" class="nav-link px-2 link-secondary">Home</a></li>
         <li><a href="/brands/getAll" class="nav-link px-2">Brands</a></li>
         <li><a href="/models/getAll" class="nav-link px-2">Models</a></li>
-<!--        <li><a style="color: #28a745" href="/users/getAll" class="nav-link px-2">Users</a></li>-->
+        <!--        <li><a style="color: #28a745" href="/users/getAll" class="nav-link px-2">Users</a></li>-->
         <li><a href="/offers/getAll" class="nav-link px-2">Offers</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/users/profile" class="nav-link px-2">Profile</a></li>
     </ul>
 
     <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li sec:authorize="!isAuthenticated()">
+                <a href="/users/login" class="btn btn-outline-primary me-2">Login</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <form
+                        th:method="post"
+                        th:action="@{/users/logout}">
+                    <input class="btn btn-link nav-link" type="submit" value="Logout">
+                </form>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+                <a href="/users/register"  class="btn btn-primary">Sign-up</a>
+            </li>
+        </ul>
+
+<!--        <a href="/users/login" class="btn btn-outline-primary me-2" sec:authorize="!isAuthenticated()">Login</a>-->
+<!--        <a href="/users/logout" class="btn btn-outline-primary me-2" sec:authorize="isAuthenticated()">Logout</a>-->
+<!--        <a href="/users/register"  class="btn btn-primary" sec:authorize="!isAuthenticated()">Sign-up</a>-->
     </div>
 </header>
 

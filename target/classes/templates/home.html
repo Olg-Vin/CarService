@@ -18,7 +18,7 @@
                             <a th:each="offer : ${offers}" th:href="@{/offers/get/{id}(id=${offer.id})}"
                                class="list-group-item list-group-item-action py-3 lh-sm">
                                 <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <img src="/images/img.jpg" alt="Offer Image">
+<!--                                    <img src="/pic/img.jpg" alt="Offer Image">-->
                                     <h5 th:text="'Description: ' + ${offer.description}" class="mb-1"></h5>
                                     <!-- Используем класс mb-1 для отступа между элементами списка -->
                                     <h5 th:text="'Price: ' + ${offer.price}" class="mb-1"></h5>

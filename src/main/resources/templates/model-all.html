@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/head}"><title>Models</title></head>
 <body>
 <div th:replace="~{fragments/header}">Navbar</div>
 <div class="container mt-3">
     <h1>Car Models</h1>
     <div class="row">
+        <div > <!-- Добавляем новую колонку для кнопки 'Add new Brand' -->
+            <a th:href="@{/models/add}"
+               class="btn btn-primary d-block mt-3" sec:authorize="hasRole('Admin')">New Model</a> <!-- Используем класс d-block и mt-3 для размещения кнопки сбоку -->
+        </div>
         <div class="col-md-8"> <!-- Указываем больший размер колонки -->
             <div class="list-group list-group-flush border-bottom scrollarea"> <!-- Используем класс list-group для отображения в виде списка -->
                 <a th:each="model : ${models}" th:href="@{/models/get/{id}(id=${model.id})}"
                    class="list-group-item list-group-item-action py-3 lh-sm">
-                    <img src="/images/img.jpg" alt="Model Image">
+<!--                    <img src="/pic/img.jpg" alt="Model Image">-->
                     <h5 th:text="'Name: '+${model.name}" class="mb-1"></h5> <!-- Используем класс mb-1 для отступа между элементами списка -->
                     <h5 th:text="'Category: '+${model.category}" class="mb-1"></h5>
                     <!--                    <a th:href="@{/models/update/{id}(id=${model.id})}" class="btn btn-primary btn-sm">Update</a>-->

@@ -2,6 +2,7 @@ package org.vinio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.vinio.dtos.*;
 import org.vinio.models.enums.Category;
@@ -20,21 +21,24 @@ public class DataInitializer implements CommandLineRunner {
     private final ModelService<String> modelService;
     private final OfferService<String> offerService;
     private final UserService<String> userService;
+    private final PasswordEncoder passwordEncoder;
     private final UserRoleService<String> userRoleService;
 
     @Autowired
     public DataInitializer(BrandService<String> brandService, ModelService<String> modelService,
                            OfferService<String> offerService, UserService<String> userService,
-                           UserRoleService<String> userRoleService) {
+                           UserRoleService<String> userRoleService, PasswordEncoder passwordEncoder) {
         this.brandService = brandService;
         this.modelService = modelService;
         this.offerService = offerService;
         this.userService = userService;
         this.userRoleService = userRoleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args) {
+        addAdmin();
 //        addManyBrands();
         List<BrandDTO> brandDTOS = addBrands();
         System.out.println();
@@ -61,7 +65,7 @@ public class DataInitializer implements CommandLineRunner {
         return list;
     }
     private void addManyBrands(){
-        for (int i = 0; i < 30_000; i++){
+        for (int i = 0; i < 10_000; i++){
             BrandDTO brandDTO = new BrandDTO();
             brandDTO.setName("car" + i);
             brandService.addBrand(brandDTO);
@@ -95,6 +99,7 @@ public class DataInitializer implements CommandLineRunner {
             userRoleDTO.setRole(Role.valueOf("User"));
             userDTO.setRole(userRoleDTO);
             userDTO.setUsername(s);
+            userDTO.setPassword(passwordEncoder.encode("123456"));
             list.add(userService.addUser(userDTO));
         }
         return list;
@@ -113,5 +118,15 @@ public class DataInitializer implements CommandLineRunner {
             list.add(offerService.addOffer(offerDTO));
         }
         return list;
+    }
+    private void addAdmin(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setActive(true);
+        UserRoleDTO userRoleDTO = new UserRoleDTO();
+        userRoleDTO.setRole(Role.valueOf("Admin"));
+        userDTO.setRole(userRoleDTO);
+        userDTO.setUsername("Admin");
+        userDTO.setPassword(passwordEncoder.encode("123456"));
+        userService.addUser(userDTO);
     }
 }
